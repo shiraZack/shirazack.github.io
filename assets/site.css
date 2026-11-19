@@ -670,7 +670,7 @@ a.tile{text-decoration:none; color:inherit}
 }
 
 /* the motto: its own quiet band between the content and the footer, one line on wide screens */
-.motto{background:var(--bg); border-top:1px solid var(--line); padding-block:var(--s5)}
+.motto{background:var(--bg); padding-block:var(--s6) var(--s4)}
 .motto .sig-foot{margin:0; text-align:center; font:400 clamp(1.15rem,2.1vw,1.7rem)/1.5 var(--f-head); color:var(--muted)}
 .motto .sig-foot .l1,.motto .sig-foot .l2{display:inline}
 .motto .sig-foot .l2{color:var(--ink); font-weight:500; margin-inline-start:.28em}
@@ -739,7 +739,11 @@ a.tile{text-decoration:none; color:inherit}
 
 /* footer on wider screens: heading a step below the hero, more air around it (phones unchanged) */
 @media (min-width:701px){
-  .contact{padding-block:var(--s6) 26px}
-  .contact h2{font-size:clamp(2.1rem,3.9vw,3.2rem)}
-  .contact .foot{margin-top:var(--s5)}
+  .contact{padding-block:clamp(40px,7.2vh,110px) clamp(16px,2.4vh,32px)}
+  .contact h2{font-size:clamp(2rem,min(3.7vw,5.2vh),3.3rem)}
+  .contact .foot{margin-top:clamp(24px,4.4vh,64px)}
 }
+
+/* show more / show less: the arrow turns when the list is open */
+#moreBtn i{font-style:normal; display:inline-block; transition:transform .25s ease}
+#moreBtn[aria-expanded="true"] i{transform:rotate(180deg)}

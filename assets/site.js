@@ -581,10 +581,15 @@ function setupGrid(grid,list,LIMIT){
   function apply(){
     const vis=cards.filter(c=>cur==="all"||c.dataset.cats.split(" ").includes(cur));
     cards.forEach(c=>{ c.hidden=true; }); vis.forEach((c,i)=>{ c.hidden=!(expanded||i<LIMIT); });
-    const rest=vis.length-LIMIT; moreBtn.hidden=expanded||rest<=0; moreBtn.querySelector("span").textContent=rest>0?`להצגת עוד ${rest} עבודות`:""; }
+    const rest=vis.length-LIMIT; moreBtn.hidden=rest<=0; moreBtn.setAttribute("aria-expanded",String(expanded));
+    moreBtn.querySelector("span").textContent=rest<=0?"":expanded?"להצגת פחות עבודות":`להצגת עוד ${rest} עבודות`; }
   fEl.addEventListener("click",e=>{ const b=e.target.closest("[data-cat]"); if(!b) return; cur=b.dataset.cat; expanded=false;
     fEl.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b))); apply(); track("filter_works",{category:cur}); });
-  moreBtn.addEventListener("click",()=>{ expanded=true; apply(); track("show_more_works"); });
+  moreBtn.addEventListener("click",()=>{
+    const top=moreBtn.getBoundingClientRect().top; expanded=!expanded; apply();
+    if(expanded) track("show_more_works");
+    else window.scrollBy({top:moreBtn.getBoundingClientRect().top-top,behavior:"instant"});   /* closing: the button stays under the finger */
+  });
   apply();
 }
 /* process steps light up one after another */
@@ -687,10 +692,15 @@ if(PAGE==="works"){
   function apply(){
     const vis=cards.filter(c=>cur==="all"||c.dataset.cats.split(" ").includes(cur));
     cards.forEach(c=>{ c.hidden=true; }); vis.forEach((c,i)=>{ c.hidden=!(expanded||i<LIMIT); });
-    const rest=vis.length-LIMIT; moreBtn.hidden=expanded||rest<=0; moreBtn.querySelector("span").textContent=rest>0?`להצגת עוד ${rest} עבודות`:""; }
+    const rest=vis.length-LIMIT; moreBtn.hidden=rest<=0; moreBtn.setAttribute("aria-expanded",String(expanded));
+    moreBtn.querySelector("span").textContent=rest<=0?"":expanded?"להצגת פחות עבודות":`להצגת עוד ${rest} עבודות`; }
   fEl.addEventListener("click",e=>{ const b=e.target.closest("[data-cat]"); if(!b) return; cur=b.dataset.cat; expanded=false;
     fEl.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b))); apply(); track("filter_works",{category:cur}); });
-  moreBtn.addEventListener("click",()=>{ expanded=true; apply(); track("show_more_works"); });
+  moreBtn.addEventListener("click",()=>{
+    const top=moreBtn.getBoundingClientRect().top; expanded=!expanded; apply();
+    if(expanded) track("show_more_works");
+    else window.scrollBy({top:moreBtn.getBoundingClientRect().top-top,behavior:"instant"});   /* closing: the button stays under the finger */
+  });
   apply();
   /* process steps light up one after another */
   const st=document.querySelector(".steps");
