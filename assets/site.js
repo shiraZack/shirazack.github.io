@@ -543,15 +543,30 @@ if(PAGE==="home"){
   startTiles(); if(DESK.addEventListener) DESK.addEventListener("change",startTiles);
   /* the full range, in progress and confidential, back on the one page */
   const REST=DONE_ORDERED.filter(p=>!SEL.includes(p));
-  setupGrid(document.getElementById("more-grid"),REST,6);
+  const PHONE=matchMedia("(max-width:700px)");
+  setupGrid(document.getElementById("more-grid"),REST,PHONE.matches?4:6);
   const ng=document.getElementById("now-grid"); if(ng) ng.innerHTML=NOW.map(p=>card(p)).join("");
   const cg=document.getElementById("conf-grid"); if(cg) cg.innerHTML=CONF.map(p=>card(p)).join("");
   lightSteps();
+  /* phones: in progress and confidential start folded behind one tap */
+  foldSection("in-progress",NOW.length,"פרויקטים בתהליך",PHONE);
+  foldSection("confidential",CONF.length,"עבודות מהשטח",PHONE);
   /* flip cards: tap to flip on touch screens */
   document.querySelectorAll(".area").forEach(a=>{
     a.addEventListener("click",()=>{ if(matchMedia("(hover:none)").matches) a.classList.toggle("flipped"); });
     a.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); a.classList.toggle("flipped"); } }); });
   reveal();
+}
+
+/* ---------- a section that starts folded on phones ---------- */
+function foldSection(id,count,label,mq){
+  const sec=document.getElementById(id); if(!sec) return; const head=sec.querySelector(".sec-head"), grid=sec.querySelector(".grid"); if(!head||!grid) return;
+  const btn=document.createElement("button"); btn.type="button"; btn.className="fold-btn"; btn.setAttribute("aria-expanded","false"); btn.setAttribute("aria-controls",grid.id);
+  const txt=()=>btn.getAttribute("aria-expanded")==="true"?`הסתרת ה${label}`:`הצגת ${count} ${label}`;
+  btn.innerHTML=`<span>${txt()}</span><i aria-hidden="true">↓</i>`; head.after(btn);
+  const apply=()=>{ sec.classList.toggle("folded", mq.matches && btn.getAttribute("aria-expanded")!=="true"); btn.querySelector("span").textContent=txt(); };
+  btn.addEventListener("click",()=>{ const open=btn.getAttribute("aria-expanded")!=="true"; btn.setAttribute("aria-expanded",String(open)); apply(); if(open) track("open_section",{section:id}); });
+  if(mq.addEventListener) mq.addEventListener("change",apply); apply();
 }
 
 /* ---------- a filtered grid with "show more" ---------- */
@@ -584,7 +599,7 @@ function reveal(){
     const step=t=>{ const k=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-k,3); b.textContent=fmt(Math.round(to*e))+m[2]; if(k<1) requestAnimationFrame(step); };
     requestAnimationFrame(step); }); }
   const els=[...document.querySelectorAll(".sec-head,.area,.numbers,.card,.contact-grid")].filter(el=>!el.closest(".swipe,.sel"));
-  if(reduce||!("IntersectionObserver" in window)) return;
+  if(reduce||!("IntersectionObserver" in window)||matchMedia("(max-width:700px)").matches) return;   /* phones: no fade-ins, the page feels faster */
   const vh=innerHeight;
   const io=new IntersectionObserver(es=>es.forEach(e=>{ if(!e.isIntersecting) return; const el=e.target; io.unobserve(el);
     el.classList.add("in"); el.classList.remove("pre"); if(el.classList.contains("numbers")) countUp(el);

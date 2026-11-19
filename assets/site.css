@@ -678,3 +678,61 @@ a.tile{text-decoration:none; color:inherit}
 .motto .sig-foot .mk::before{opacity:.42}
 .motto .sig-foot .ul svg path{fill:var(--coral)}
 @media (max-width:700px){ .motto .sig-foot .l1,.motto .sig-foot .l2{display:block} .motto .sig-foot .l2{margin:0} }
+
+/* ================= phones: lighter one-page (desktop unchanged) ================= */
+.fold-btn{display:none}
+@media (max-width:700px){
+  .section{padding-block:var(--s5)}
+  .sel2{padding-block:var(--s5)}
+  .sec-head{margin-bottom:var(--s4); gap:var(--s1)}
+  .sec-head p{font-size:1.05rem}
+  .hero{gap:var(--s4)}
+  .portrait{width:min(250px,64vw)}
+
+  /* projects as compact rows: small image, name, type; the whole row opens the project */
+  #more-grid,#now-grid,#conf-grid{grid-template-columns:1fr; gap:var(--s2)}
+  #more-grid .card,#now-grid .card,#conf-grid .card{flex-direction:row; align-items:center; gap:var(--s2); padding:10px; border-radius:var(--r1)}
+  #more-grid .card:hover,#now-grid .card:hover,#conf-grid .card:hover{transform:none}
+  #more-grid .cover,#now-grid .cover,#conf-grid .cover{flex:none; width:88px; aspect-ratio:1/1; border-radius:8px}
+  #more-grid .badge,#now-grid .badge,#conf-grid .badge{display:none}
+  #more-grid .card-body,#now-grid .card-body,#conf-grid .card-body{padding:0; gap:4px}
+  #more-grid .card h3,#now-grid .card h3,#conf-grid .card h3{font-size:1.02rem; line-height:1.3}
+  #more-grid .meta,#now-grid .meta,#conf-grid .meta{font-size:.76rem; gap:4px 8px}
+  #more-grid .card-line,#now-grid .card-line,#conf-grid .card-line,
+  #more-grid .card-go,#now-grid .card-go,#conf-grid .card-go{display:none}
+  #more-grid .card::after,#now-grid .card::after,#conf-grid .card::after{content:"←"; flex:none; margin-inline-start:auto; padding-inline:4px; font:700 1.1rem var(--f-head); color:var(--cobalt)}
+
+  /* filters: one row you swipe sideways */
+  .filters{flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; margin-inline:-20px; padding-inline:20px; padding-bottom:4px}
+  .filters::-webkit-scrollbar{display:none}
+  .filters button{flex:none}
+
+  /* in progress and confidential start folded */
+  .fold-btn{display:flex; align-items:center; justify-content:space-between; gap:var(--s2); width:100%; margin-top:calc(var(--s2) * -1); padding:.85em 1.1em; border:1px solid var(--line); border-radius:var(--r1); background:var(--surface); color:var(--ink); font:600 1rem var(--f-head); cursor:pointer; text-align:right}
+  .fold-btn i{font-style:normal; color:var(--cobalt); transition:transform .25s ease}
+  .fold-btn[aria-expanded="true"]{margin-bottom:var(--s3)}
+  .fold-btn[aria-expanded="true"] i{transform:rotate(180deg)}
+  .folded .grid,.folded .note-line{display:none}
+  #in-progress .sec-head,#confidential .sec-head{margin-bottom:var(--s3)}
+
+  /* "what I bring": a short direct list, no flipping */
+  .areas{gap:var(--s2)}
+  .area{height:auto; perspective:none; cursor:default}
+  .area .flip{transform:none!important; height:auto; transition:none}
+  .area .face{position:relative; inset:auto; backface-visibility:visible; -webkit-backface-visibility:visible}
+  .area .front{display:none}
+  .area .back{transform:none; padding:var(--s3); gap:var(--s1)}
+  .area .back .lbl,.area .back .wm{display:none}
+  .area .back h3,.area .back p,.area .back .pills li{opacity:1!important; transform:none!important; transition:none!important}
+  .area .back h3{margin-top:0; font-size:1.15rem}
+  .area .back p{font-size:.98rem; line-height:1.55}
+  .numbers{margin-top:var(--s4)}
+
+  /* process: a compact vertical timeline */
+  .steps{grid-template-columns:1fr; row-gap:var(--s3)}
+  .steps li{display:grid; grid-template-columns:40px minmax(0,1fr); column-gap:var(--s2); row-gap:2px; align-content:start}
+  .steps .n{width:40px; height:40px; font-size:.9rem; grid-row:1 / span 3}
+  .steps h3{font-size:1.15rem; align-self:center}
+  .steps p{font-size:.98rem; line-height:1.5}
+  .steps li:not(:last-child)::after{content:""; position:absolute; right:19.5px; top:44px; bottom:calc(var(--s3) * -1 + 4px); width:1px; background:var(--ink); opacity:.18}
+}
