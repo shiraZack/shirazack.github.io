@@ -628,7 +628,14 @@ a.card{text-decoration:none}
 .pp-media.cover .mock{height:100%}
 
 /* footer: the English line as a handwritten signature */
-.sig-foot{margin-top:var(--s5); font:400 1.4rem/1.25 "Gveret Levin","Assistant",cursive; color:var(--on-dark); direction:ltr; text-align:right}
+.sig-foot{margin:var(--s6) 0 var(--s2); direction:ltr; text-align:center; font:400 clamp(1.3rem,2.6vw,2.1rem)/1.5 var(--f-head); color:var(--on-dark-muted); letter-spacing:-.005em}
+.sig-foot .l1,.sig-foot .l2{display:block}
+.sig-foot .l2{color:var(--on-dark); font-weight:500}
+.sig-foot .mk,.sig-foot .ul{position:relative; display:inline-block; font:400 1.3em/1 "Gveret Levin","Assistant",cursive; color:#fff; padding:0 .1em}
+.sig-foot .mk{z-index:0; transform:rotate(-2deg); margin:0 .08em}
+.sig-foot .mk::before{content:""; position:absolute; z-index:-1; inset:.2em -.22em .02em -.24em; background:var(--lav,#BD9DEA); opacity:.5; border-radius:.55em .25em .6em .3em / .4em .6em .3em .55em; transform:skewX(-10deg)}
+.sig-foot .ul svg{position:absolute; left:-3%; bottom:-.16em; width:108%; height:.32em; overflow:visible}
+.sig-foot .ul svg path{fill:var(--sage,#F2C76E)}
 .privacy{margin-top:var(--s2); font-size:.85rem; color:var(--on-dark-muted)}
 .contact .foot{margin-top:var(--s3)}
 
@@ -649,3 +656,15 @@ a.tile{text-decoration:none; color:inherit}
 /* about: text with the numbers beside it */
 .about .about-grid{grid-template-columns:minmax(0,1.618fr) minmax(0,1fr); max-width:none; align-items:center}
 @media (max-width:860px){ .about .about-grid{grid-template-columns:1fr} }
+
+/* desktop carousel: hint and "all projects" sit up top, so the bottom stays clear for the card text */
+.sel-head .sel-hint{font-size:var(--t-label); margin-top:2px}
+.sel-meta .sel-allbtn{margin-top:var(--s2); padding:.6em 1.15em; font-size:.95rem}
+.cflow .tile{--tw:clamp(290px,min(40vw,62vh),560px)}
+@media (max-height:820px){
+  .sel-stage{gap:var(--s2); padding-block:var(--s2)}
+  .sel-head .sec-head h2{font-size:clamp(1.9rem,3.4vw,2.7rem)}
+  .sel-meta .sel-allbtn{margin-top:var(--s1)}
+  .cflow-wrap{min-height:400px}
+  .cflow .tile{--tw:clamp(290px,min(40vw,56vh),560px)}
+}
