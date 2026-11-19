@@ -24,7 +24,7 @@
   --f-head:"Heebo","Assistant",system-ui,sans-serif;
   --f-body:"Assistant","Heebo","Arial Hebrew",system-ui,sans-serif;
   --t-label:.8125rem; --t-small:.9rem; --t-body:1.125rem; --t-lead:1.3125rem; --t-card:1.375rem; --t-h3:1.625rem;
-  --t-h2:clamp(2rem,4.4vw,3.375rem); --t-hero:clamp(2.5rem,4.9vw,4rem);
+  --t-h2:clamp(2rem,4.4vw,3.375rem); --t-hero:clamp(2.25rem,4.2vw,3.4rem);
   --s1:8px; --s2:13px; --s3:21px; --s4:34px; --s5:55px; --s6:89px; --s7:144px;
   --r1:10px; --r2:16px; --r3:26px;
   --sh-1:0 1px 2px rgba(46,44,82,.06); --sh-2:0 1px 2px rgba(46,44,82,.05),0 12px 30px -12px rgba(46,44,82,.18);
@@ -381,11 +381,14 @@ dialog#case[open]{animation:pageIn .4s cubic-bezier(.2,.7,.2,1)}
 .sel-bar i{display:block; height:100%; width:0; background:var(--coral)}
 .cflow-wrap{position:relative; flex:1; min-height:440px; max-height:600px; perspective:1600px; perspective-origin:50% 35%}
 .cflow{position:absolute; inset:0; transform-style:preserve-3d}
+/* the 3D container sits in front of cards that are pushed back in depth, so it must not catch clicks */
+.cflow{pointer-events:none}
 .cflow .tile{--tw:clamp(290px,40vw,560px); position:absolute; top:4%; left:50%; width:var(--tw); margin-left:calc(var(--tw) / -2); gap:var(--s2); will-change:transform,opacity}
 .cflow .tile .stage{box-shadow:0 34px 60px -26px rgba(0,0,0,.7)}
 .cflow .tile .stage::after{content:""; position:absolute; inset:0; z-index:2; background:linear-gradient(90deg,rgba(8,14,24,.6),rgba(8,14,24,.2)); opacity:var(--shade,0); pointer-events:none}
 .cflow .cap{align-items:flex-start; transition:opacity .35s ease}
 .cflow .tile:not(.front) .cap{opacity:0}
+@media (hover:hover){ .cflow .tile:not(.front):hover .stage::after{opacity:calc(var(--shade,0) * .35); transition:opacity .2s ease} .cflow .tile:not(.front):hover .dev{--ty:-8px} }
 .cflow .cap h3{transition:color .3s ease}
 .cflow .more{display:grid; grid-template-rows:0fr; opacity:0; transition:grid-template-rows .55s cubic-bezier(.2,.7,.2,1), opacity .4s ease}
 .cflow .more > *{overflow:hidden}
@@ -1405,7 +1408,7 @@ window.addEventListener("hashchange",fromHash); fromHash();
   const kick=()=>{ if(!raf) raf=requestAnimationFrame(frame); };
   function go(k){ k=clamp(k,0,n-1); const total=sec.offsetHeight-stage.offsetHeight; window.scrollTo({top:sec.offsetTop+total*(.04+.8*k/(n-1))+1,behavior:reduce?"auto":"smooth"}); }
   el.addEventListener("click",e=>{ const t=e.target.closest(".tile"); if(!t) return; const i=+t.dataset.i;
-    if(reduce||i===cur) openCase(CAR[i].id); else go(i); });
+    openCase(CAR[i].id); });
   sec.addEventListener("keydown",e=>{ if(e.key==="ArrowLeft"){ e.preventDefault(); go(cur+1); } if(e.key==="ArrowRight"){ e.preventDefault(); go(cur-1); } });
   if(!reduce && canHover){
     items.forEach(t=>{ const st=t.querySelector(".stage"), d=st.querySelector(".dev");
