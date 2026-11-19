@@ -292,7 +292,9 @@ dialog#case[open]{animation:pageIn .4s cubic-bezier(.2,.7,.2,1)}
 .shots figure:has(img.wide){grid-column:1/-1; max-width:760px}
 .board{display:flex; flex-direction:column; gap:var(--s4); padding-top:var(--s4); border-top:1px solid var(--line)}
 .board-head h3{font:600 var(--t-label) var(--f-head); letter-spacing:.08em; color:var(--coral); margin-bottom:8px}
+.board-head{display:flex; flex-direction:column; gap:var(--s2)}
 .board-head p{font-size:1.08rem; line-height:1.65; max-width:46em}
+.board-head .pp-note{font-size:.98rem; max-width:46em}
 .board ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:var(--s5)}
 .board li{display:grid; grid-template-columns:minmax(0,1.618fr) minmax(0,1fr); gap:var(--s4); align-items:center}
 .board img{display:block; width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:var(--r1); border:1px solid var(--line); box-shadow:var(--sh-2); background:#fff}
@@ -848,7 +850,7 @@ const P=[
         "משוב מיידי על כל ניסיון ניתוב, עם ניסיון נוסף אחרי טעות."],
    output:"לומדה אינטראקטיבית של כ־10 דקות ב־Articulate Storyline, עם עץ מבנה מסכים, אינטראקציות, שאלות ניתוב ומשוב מיידי.",
    learned:"[[מה למדת על כתיבת תרחישים או על מבנה של לומדה]]",
-   board:{t:"מתוך הסטוריבורד", lede:"לכל מסך תוכנן מראש מה רואים בו, מה הלומד עושה ואיך המסך מגיב. אלה כמה מסכים מהפרק הראשון, לפי הסדר שבו הם מופיעים בלומדה.",
+   board:{t:"מהסטוריבורד הראשוני: שלב התכנון", lede:"לפני הפיתוח ב־Storyline תכננו כל מסך בפרק הראשון: מה רואים בו, מה הלומד עושה ואיך המסך מגיב. אלה כמה מסכים מתוך הסטוריבורד.", note:"זה הסטוריבורד בגרסה הראשונה שלו. במהלך הפיתוח חלק מהמסכים שונו וחלק נגנזו, ולכן הלומדה הסופית נראית אחרת. את המוצר הסופי אפשר לראות בצילומי המסך למטה ובקישור ללומדה.",
      items:[["slides/sb/01.jpg","מסך 6","השלכות הניתוב השגוי","שלוש כרטיסיות, זמן, כסף ואמון, חושפות את הנזק של ניתוב שגוי. ניווט עליון נחשף במעבר עכבר ומראה ללומד איפה הוא נמצא. כפתור ״הבא״ כבוי עד שהלומד פותח את כל הכרטיסיות."],
             ["slides/sb/02.jpg","מסך 8","חלונית מידע","לחיצה על כרטיסייה פותחת חלונית על רקע מוחשך, כדי למקד את הקשב. סגירה ב־X מחזירה למסך הבחירה, והכרטיסייה מסומנת ב־V."],
             ["slides/sb/03.jpg","מסך 14","הבומרנג: מסעה של פנייה אבודה","סרטון שמופעל בלחיצה, בלי פס ניגון, כדי שלא ידלגו עליו. רק בסוף הצפייה מופיע טקסט הסיכום, וכפתור ״הבא״ נפתח."],
@@ -1326,7 +1328,7 @@ function openCase(id){
         ${sec("התוצר",p.output)}${sec("מה למדתי",p.learned)}
       </div>
       ${(p.decks||[]).map((d,k)=>k===heroDeck?"":deckHTML(d,k)).join("")}
-      ${p.board?`<section class="board"><div class="board-head"><h3>${p.board.t}</h3>${p.board.lede?`<p>${p.board.lede}</p>`:""}</div><ol>${p.board.items.map(([src,n,h,d])=>`<li><img src="${src}" alt="${n}: ${h}" loading="lazy"><div class="sb-txt"><span class="sb-n">${n}</span><h4>${h}</h4><p>${d}</p></div></li>`).join("")}</ol></section>`:""}
+      ${p.board?`<section class="board"><div class="board-head"><h3>${p.board.t}</h3>${p.board.lede?`<p>${p.board.lede}</p>`:""}${p.board.note?`<p class="pp-note">${INFO}<span>${p.board.note}</span></p>`:""}</div><ol>${p.board.items.map(([src,n,h,d])=>`<li><img src="${src}" alt="${n}: ${h}" loading="lazy"><div class="sb-txt"><span class="sb-n">${n}</span><h4>${h}</h4><p>${d}</p></div></li>`).join("")}</ol></section>`:""}
       ${p.shots?`<div class="shots">${p.shots.map(([src,c,k])=>`<figure><img src="${src}" alt="${c}" loading="lazy"${k?` class="${k}"`:""}><figcaption>${c}</figcaption></figure>`).join("")}</div>`:""}
       ${p.media&&p.media.length?`<div class="slots">${p.media.map(m=>`<div class="slot">${IMG}<span>מקום ל: ${m}</span></div>`).join("")}</div>`:""}
       <div class="pp-next"><button type="button" class="btn" data-close>→ חזרה לעבודות</button><button type="button" class="btn primary" data-open="${nextP.id}">הפרויקט הבא: ${nextP.title} ←</button></div>
