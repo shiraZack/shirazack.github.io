@@ -736,3 +736,10 @@ a.tile{text-decoration:none; color:inherit}
   .steps p{font-size:.98rem; line-height:1.5}
   .steps li:not(:last-child)::after{content:""; position:absolute; right:19.5px; top:44px; bottom:calc(var(--s3) * -1 + 4px); width:1px; background:var(--ink); opacity:.18}
 }
+
+/* footer on wider screens: heading a step below the hero, more air around it (phones unchanged) */
+@media (min-width:701px){
+  .contact{padding-block:var(--s6) 26px}
+  .contact h2{font-size:clamp(2.1rem,3.9vw,3.2rem)}
+  .contact .foot{margin-top:var(--s5)}
+}
