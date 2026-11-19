@@ -541,6 +541,59 @@ if(PAGE==="home"){
   const DESK=matchMedia("(min-width:1024px) and (hover:hover) and (pointer:fine)");
   let tilesOn=false; const startTiles=()=>{ if(DESK.matches&&!tilesOn){ tilesOn=true; initTiles(); } };
   startTiles(); if(DESK.addEventListener) DESK.addEventListener("change",startTiles);
+  /* the full range, in progress and confidential, back on the one page */
+  const REST=DONE_ORDERED.filter(p=>!SEL.includes(p));
+  setupGrid(document.getElementById("more-grid"),REST,6);
+  const ng=document.getElementById("now-grid"); if(ng) ng.innerHTML=NOW.map(p=>card(p)).join("");
+  const cg=document.getElementById("conf-grid"); if(cg) cg.innerHTML=CONF.map(p=>card(p)).join("");
+  lightSteps();
+  /* flip cards: tap to flip on touch screens */
+  document.querySelectorAll(".area").forEach(a=>{
+    a.addEventListener("click",()=>{ if(matchMedia("(hover:none)").matches) a.classList.toggle("flipped"); });
+    a.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); a.classList.toggle("flipped"); } }); });
+  reveal();
+}
+
+/* ---------- a filtered grid with "show more" ---------- */
+function setupGrid(grid,list,LIMIT){
+  if(!grid) return;
+  grid.innerHTML=list.map(p=>card(p)).join("");
+  const CATS=[["all","הכול"],["learn","למידה והדרכה"],["video","וידאו ואנימציה"],["design","עיצוב"],["digital","אתרים ומשחקים"],["ai","AI"]];
+  const fEl=document.getElementById("filters"), moreBtn=document.getElementById("moreBtn");
+  fEl.innerHTML=CATS.map(([k,l])=>{ const c=list.filter(p=>k==="all"||(p.cats||[]).includes(k)).length; if(!c) return "";
+    return `<button type="button" data-cat="${k}" aria-pressed="${k==="all"}"><bdi>${l}</bdi><span>${c}</span></button>`; }).join("");
+  let cur="all", expanded=false; const cards=[...grid.querySelectorAll(".card")];
+  function apply(){
+    const vis=cards.filter(c=>cur==="all"||c.dataset.cats.split(" ").includes(cur));
+    cards.forEach(c=>{ c.hidden=true; }); vis.forEach((c,i)=>{ c.hidden=!(expanded||i<LIMIT); });
+    const rest=vis.length-LIMIT; moreBtn.hidden=expanded||rest<=0; moreBtn.querySelector("span").textContent=rest>0?`להצגת עוד ${rest} עבודות`:""; }
+  fEl.addEventListener("click",e=>{ const b=e.target.closest("[data-cat]"); if(!b) return; cur=b.dataset.cat; expanded=false;
+    fEl.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b))); apply(); track("filter_works",{category:cur}); });
+  moreBtn.addEventListener("click",()=>{ expanded=true; apply(); track("show_more_works"); });
+  apply();
+}
+/* process steps light up one after another */
+function lightSteps(){ const st=document.querySelector(".steps"); if(!st) return;
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches||!("IntersectionObserver" in window)){ st.classList.add("go"); return; }
+  st.classList.add("wait"); const io=new IntersectionObserver(es=>{ if(es[0].isIntersecting){ st.classList.add("go"); st.classList.remove("wait"); io.disconnect(); } },{threshold:.45}); io.observe(st); }
+/* sections and numbers ease in as they scroll into view (only what starts below the first screen) */
+function reveal(){
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function countUp(box){ box.querySelectorAll("b").forEach(b=>{ const raw=b.textContent.trim(), m=raw.replace(/,/g,"").match(/^(\d+)(\+?)$/); if(!m||reduce) return;
+    const to=+m[1], t0=performance.now(), dur=1400, fmt=n=>n.toLocaleString("en-US");
+    const step=t=>{ const k=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-k,3); b.textContent=fmt(Math.round(to*e))+m[2]; if(k<1) requestAnimationFrame(step); };
+    requestAnimationFrame(step); }); }
+  const els=[...document.querySelectorAll(".sec-head,.area,.numbers,.card,.contact-grid")].filter(el=>!el.closest(".swipe,.sel"));
+  if(reduce||!("IntersectionObserver" in window)) return;
+  const vh=innerHeight;
+  const io=new IntersectionObserver(es=>es.forEach(e=>{ if(!e.isIntersecting) return; const el=e.target; io.unobserve(el);
+    el.classList.add("in"); el.classList.remove("pre"); if(el.classList.contains("numbers")) countUp(el);
+    setTimeout(()=>{ el.classList.remove("in"); el.style.transitionDelay=""; },2600); }),{rootMargin:"0px 0px -8% 0px",threshold:.1});
+  els.forEach(el=>{ const r=el.getBoundingClientRect();
+    if(r.top>vh*.9){ const sib=[...el.parentElement.children].indexOf(el); el.classList.add("pre");
+      if(el.matches(".card,.area")) el.style.transitionDelay=(sib%3*90)+"ms";
+      io.observe(el); }
+    else if(el.classList.contains("numbers")) countUp(el); });
 }
 
 /* ---------- desktop carousel: realistic devices, turns with the scroll, every card opens its project ---------- */
@@ -652,7 +705,7 @@ function renderProject(p){
   else media=`<figure class="pp-media cover">${coverHTML(p,true)}</figure>`;
   document.getElementById("project").innerHTML=`
     <div class="pp-bar wrap">
-      <a class="btn" href="${ROOT}works.html">→ כל העבודות</a>
+      <a class="btn" href="${ROOT}index.html#more">→ כל העבודות</a>
       <nav class="pp-nav" aria-label="מעבר בין פרויקטים"><a class="btn" href="${HREF(prevP.id)}" aria-label="לפרויקט הקודם: ${prevP.title}">→</a><a class="btn" href="${HREF(nextP.id)}" aria-label="לפרויקט הבא: ${nextP.title}">←</a></nav>
     </div>
     <section class="pp-hero wrap">
@@ -681,7 +734,7 @@ function renderProject(p){
       ${p.board?`<section class="board"><div class="board-head"><h3>${p.board.t}</h3>${p.board.lede?`<p>${p.board.lede}</p>`:""}${p.board.note?`<p class="pp-note">${INFO}<span>${p.board.note}</span></p>`:""}</div><ol>${p.board.items.map(([src,n,h,d])=>`<li><img src="${src}" alt="${n}: ${h}" loading="lazy"><div class="sb-txt"><span class="sb-n">${n}</span><h4>${h}</h4><p>${d}</p></div></li>`).join("")}</ol></section>`:""}
       ${p.shots?`<div class="shots">${p.shots.map(([src,c,k])=>`<figure><img src="${src}" alt="${c}" loading="lazy"${k?` class="${k}"`:""}><figcaption>${c}</figcaption></figure>`).join("")}</div>`:""}
       ${p.media&&p.media.length?`<div class="slots">${p.media.map(m=>`<div class="slot">${IMG}<span>מקום ל: ${m}</span></div>`).join("")}</div>`:""}
-      <div class="pp-next"><a class="btn" href="${ROOT}works.html">→ כל העבודות</a><a class="btn primary" href="${HREF(nextP.id)}">הפרויקט הבא: ${nextP.title} ←</a></div>
+      <div class="pp-next"><a class="btn" href="${ROOT}index.html#more">→ כל העבודות</a><a class="btn primary" href="${HREF(nextP.id)}">הפרויקט הבא: ${nextP.title} ←</a></div>
     </section>`;
 }
 function deckGo(el,step){ const p=curP; if(!p||!p.decks||!el) return; const d=p.decks[+el.dataset.deck]; const i=Math.min(d.s.length-1,Math.max(0,+el.dataset.i+step));
