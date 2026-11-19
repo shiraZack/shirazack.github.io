@@ -668,3 +668,13 @@ a.tile{text-decoration:none; color:inherit}
   .cflow-wrap{min-height:400px}
   .cflow .tile{--tw:clamp(290px,min(40vw,56vh),560px)}
 }
+
+/* the motto: its own quiet band between the content and the footer, one line on wide screens */
+.motto{background:var(--bg); border-top:1px solid var(--line); padding-block:var(--s5)}
+.motto .sig-foot{margin:0; text-align:center; font:400 clamp(1.15rem,2.1vw,1.7rem)/1.5 var(--f-head); color:var(--muted)}
+.motto .sig-foot .l1,.motto .sig-foot .l2{display:inline}
+.motto .sig-foot .l2{color:var(--ink); font-weight:500; margin-inline-start:.28em}
+.motto .sig-foot .mk,.motto .sig-foot .ul{color:var(--ink)}
+.motto .sig-foot .mk::before{opacity:.42}
+.motto .sig-foot .ul svg path{fill:var(--coral)}
+@media (max-width:700px){ .motto .sig-foot .l1,.motto .sig-foot .l2{display:block} .motto .sig-foot .l2{margin:0} }
