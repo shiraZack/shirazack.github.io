@@ -670,7 +670,7 @@ a.tile{text-decoration:none; color:inherit}
 }
 
 /* the motto: its own quiet band between the content and the footer, one line on wide screens */
-.motto{margin-top:var(--s5); padding-top:var(--s5); border-top:1px solid var(--line)}
+.motto{padding-block:var(--s5)}
 .motto .sig-foot{margin:0; text-align:center; font:400 clamp(1.15rem,2.1vw,1.7rem)/1.5 var(--f-head); color:var(--muted)}
 .motto .sig-foot .l1,.motto .sig-foot .l2{display:inline}
 .motto .sig-foot .l2{color:var(--ink); font-weight:500; margin-inline-start:.28em}
@@ -747,3 +747,27 @@ a.tile{text-decoration:none; color:inherit}
 /* show more / show less: the arrow turns when the list is open */
 #moreBtn i{font-style:normal; display:inline-block; transition:transform .25s ease}
 #moreBtn[aria-expanded="true"] i{transform:rotate(180deg)}
+
+/* about: sticky notes beside the text (left of it in RTL) */
+.stickies{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(2,minmax(0,170px)); gap:var(--s3) var(--s3); justify-content:center; align-content:center}
+.sn{position:relative; aspect-ratio:1; display:flex; align-items:center; justify-content:center; padding:1.1em .9em .9em; text-align:center;
+  font:400 clamp(1.25rem,1.7vw,1.5rem)/1.2 "Gveret Levin","Assistant",cursive; color:var(--navy);
+  border-radius:2px 2px 4px 14px / 2px 2px 4px 10px;
+  box-shadow:0 1px 1px rgba(0,0,0,.06), 0 10px 18px -8px rgba(0,0,0,.22);
+  transform:rotate(var(--r,0deg)); transition:transform .3s ease, box-shadow .3s ease}
+.sn::before{content:""; position:absolute; top:-9px; left:50%; width:56px; height:18px; transform:translateX(-50%) rotate(-2deg); background:rgba(255,255,255,.55); box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.sn::after{content:""; position:absolute; inset:auto 0 0 auto; width:18px; height:18px; background:linear-gradient(225deg,transparent 50%,rgba(0,0,0,.07) 50%); border-radius:0 0 0 12px}
+.sn-y{background:#F7D88C; --r:-3deg}
+.sn-p{background:#F4B3BF; --r:2.5deg; margin-top:var(--s4)}
+.sn-l{background:#D6C4F2; --r:-1.5deg; grid-column:1 / -1; justify-self:center; width:min(170px,100%); margin-top:calc(var(--s2) * -1)}
+@media (hover:hover){ .sn:hover{transform:rotate(0deg) translateY(-4px); box-shadow:0 1px 1px rgba(0,0,0,.06), 0 16px 24px -10px rgba(0,0,0,.26)} }
+@media (prefers-reduced-motion:reduce){ .sn{transition:none} }
+@media (max-width:860px){
+  .stickies{grid-template-columns:repeat(3,minmax(0,150px)); justify-content:center; margin-top:var(--s3)}
+  .sn-p{margin-top:var(--s3)} .sn-l{grid-column:auto; width:auto; justify-self:stretch; margin-top:0}
+}
+@media (max-width:700px){
+  .stickies{grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--s2)}
+  .sn{font-size:1.05rem; padding:.9em .5em .6em}
+  .sn::before{width:40px; height:14px; top:-7px}
+}
