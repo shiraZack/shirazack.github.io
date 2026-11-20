@@ -771,3 +771,8 @@ a.tile{text-decoration:none; color:inherit}
   .sn{font-size:1.05rem; padding:.9em .5em .6em}
   .sn::before{width:40px; height:14px; top:-7px}
 }
+
+/* process: five ADDIE steps */
+@media (min-width:901px){ .steps{grid-template-columns:repeat(5,minmax(0,1fr))} }
+@media (min-width:701px) and (max-width:900px){ .steps li:nth-child(5){grid-column:1 / -1; max-width:calc(50% - var(--s3) / 2)} }
+.steps.go li:nth-child(5) .n,.steps.go li:nth-child(5) h3,.steps.go li:nth-child(5) p,.steps.go li:nth-child(5) small{transition-delay:3.2s; animation-delay:3.2s}
