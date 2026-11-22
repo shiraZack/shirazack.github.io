@@ -948,3 +948,12 @@ a.tile{text-decoration:none; color:inherit}
 .cs2 .metrics{margin-top:calc(var(--s3) * -1)}
 @media (max-width:700px){ .dec-pair{grid-template-columns:1fr; gap:var(--s4)} }
 @media (max-width:700px){ .dec-panel.tall .dec-img{max-width:220px} }
+
+/* ===== stage 6: readable pink text (WCAG AA). Bright coral stays for lines, dots and the dark bands ===== */
+:root{--coral-ink:#B23A55; --coral-lg:#D4566E}
+.eyebrow,.cs-grid h3,.board-head h3,.id-facts dt,.pp-facts dt{color:var(--coral-ink)}
+.eyebrow::before{background:var(--coral)}
+.dark .eyebrow{color:var(--coral)}
+.hero h1 .hl2{color:var(--coral-lg)}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){--coral-ink:#F28EA0; --coral-lg:#F28EA0} }
+:root[data-theme="dark"]{--coral-ink:#F28EA0; --coral-lg:#F28EA0}
