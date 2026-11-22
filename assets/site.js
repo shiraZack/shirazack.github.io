@@ -547,9 +547,10 @@ addEventListener("pagehide",()=>{ try{ sessionStorage.setItem("y:"+location.path
 /* ---------- shared ---------- */
 const byId=id=>P.find(p=>p.id===id);
 const HREF=id=>ROOT+"projects/"+id+".html";
-const SEL=["ping-pong","copyclick","penso","moodle","video","cupid"].map(byId).filter(Boolean);
+const SEL=["ping-pong","copyclick","moodle","penso"].map(byId).filter(Boolean);
+const NEXT_UP=["cupid","video"].map(byId).filter(Boolean);   /* strong projects that lead the full range */
 const DONE=P.filter(p=>p.group==="featured"||p.group==="more");
-const DONE_ORDERED=[...SEL,...DONE.filter(p=>!SEL.includes(p))];
+const DONE_ORDERED=[...SEL,...NEXT_UP,...DONE.filter(p=>!SEL.includes(p)&&!NEXT_UP.includes(p))];
 const NOW=P.filter(p=>p.group==="now"), CONF=P.filter(p=>p.group==="conf");
 const ORDER=[...DONE_ORDERED,...NOW,...CONF];
 /* one short line per selected project, for the homepage cards */
@@ -588,7 +589,7 @@ if(PAGE==="home"){
   /* the full range, in progress and confidential, back on the one page */
   const REST=DONE_ORDERED.filter(p=>!SEL.includes(p));
   const PHONE=matchMedia("(max-width:700px)");
-  setupGrid(document.getElementById("more-grid"),REST,0);   /* the archive starts folded: the six selected projects lead */
+  setupGrid(document.getElementById("more-grid"),REST,PHONE.matches?3:4);   /* one row peeks out, the rest opens on request */
   const ng=document.getElementById("now-grid"); if(ng) ng.innerHTML=NOW.map(p=>card(p)).join("");
   const cg=document.getElementById("conf-grid"); if(cg) cg.innerHTML=CONF.map(p=>card(p)).join("");
   lightSteps();
@@ -600,6 +601,42 @@ if(PAGE==="home"){
     a.addEventListener("click",()=>{ if(matchMedia("(hover:none)").matches) a.classList.toggle("flipped"); });
     a.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); a.classList.toggle("flipped"); } }); });
   reveal();
+}
+
+/* ---------- selected projects: a carousel that moves only when you click (or swipe on a phone) ---------- */
+function setupCarousel(tr){
+  const wrap=tr.closest(".feat-car"); if(!wrap) return;
+  const prev=wrap.querySelector(".car-prev"), next=wrap.querySelector(".car-next"), dotsEl=wrap.querySelector(".car-dots");
+  const cards=[...tr.children], n=cards.length, reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const gap=()=>parseFloat(getComputedStyle(tr).columnGap)||0;
+  const step=()=>cards[0].getBoundingClientRect().width+gap();
+  const visible=()=>Math.max(1,Math.round((tr.clientWidth+gap())/step()));
+  const max=()=>Math.max(0,n-visible());
+  const pos=()=>Math.min(max(),Math.round(Math.abs(tr.scrollLeft)/step()));
+  const rtl=getComputedStyle(tr).direction==="rtl";
+  let cur=0, settle=0;
+  const go=i=>{ i=Math.max(0,Math.min(max(),i)); cur=i; update(); tr.scrollTo({left:(rtl?-1:1)*i*step(),behavior:reduce?"auto":"smooth"}); };
+  let dots=[];
+  const build=()=>{ cur=pos(); dotsEl.innerHTML=""; dots=[]; for(let i=0;i<=max();i++){ const b=document.createElement("button"); b.type="button"; b.className="car-dot";
+      b.setAttribute("aria-label",`פרויקטים ${i+1} עד ${Math.min(i+visible(),n)} מתוך ${n}`); b.addEventListener("click",()=>go(i)); dotsEl.appendChild(b); dots.push(b); }
+    wrap.classList.toggle("no-ctrl",max()===0); update(); };
+  const update=()=>{ const p=cur; prev.disabled=p<=0; next.disabled=p>=max(); dots.forEach((d,i)=>d.setAttribute("aria-current",String(i===p))); };
+  prev.addEventListener("click",()=>{ go(cur-1); track("carousel_prev"); });
+  next.addEventListener("click",()=>{ go(cur+1); track("carousel_next"); });
+  tr.addEventListener("keydown",e=>{ if(e.target!==tr) return; if(e.key==="ArrowLeft"){ e.preventDefault(); go(cur+(rtl?1:-1)); } if(e.key==="ArrowRight"){ e.preventDefault(); go(cur+(rtl?-1:1)); } });
+  tr.addEventListener("scroll",()=>{ clearTimeout(settle); settle=setTimeout(()=>{ cur=pos(); update(); },140); },{passive:true});
+  /* grab and drag sideways with the mouse (touch screens already swipe natively) */
+  let down=null, dragged=false;
+  tr.addEventListener("pointerdown",e=>{ if(e.pointerType!=="mouse"||e.button!==0) return; down={x:e.clientX, sl:tr.scrollLeft}; dragged=false; });
+  addEventListener("pointermove",e=>{ if(!down) return; const dx=e.clientX-down.x;
+    if(!dragged&&Math.abs(dx)>6){ dragged=true; tr.classList.add("dragging"); }
+    if(dragged){ tr.scrollLeft=down.sl-dx; e.preventDefault(); } });
+  addEventListener("pointerup",()=>{ if(!down) return; down=null;
+    if(dragged){ tr.classList.remove("dragging"); cur=pos(); go(cur); track("carousel_drag"); setTimeout(()=>{ dragged=false; },0); } });
+  tr.addEventListener("click",e=>{ if(dragged){ e.preventDefault(); e.stopPropagation(); } },true);   /* a drag never opens a project */
+  tr.addEventListener("dragstart",e=>e.preventDefault());
+  let rt=0; addEventListener("resize",()=>{ clearTimeout(rt); rt=setTimeout(build,150); });
+  build();
 }
 
 /* ---------- a section that starts folded on phones ---------- */
@@ -624,10 +661,11 @@ function setupGrid(grid,list,LIMIT){
   let cur="all", expanded=false; const cards=[...grid.querySelectorAll(".card")];
   function apply(){
     const vis=cards.filter(c=>cur==="all"||c.dataset.cats.split(" ").includes(cur));
-    cards.forEach(c=>{ c.hidden=true; }); vis.forEach((c,i)=>{ c.hidden=!(expanded||i<LIMIT); });
-    const rest=vis.length-LIMIT; moreBtn.hidden=rest<=0; moreBtn.setAttribute("aria-expanded",String(expanded));
+    const lim=(LIMIT>0&&vis.length<=4)?vis.length:LIMIT;   /* four or fewer fit in one row: show them all, no button */
+    cards.forEach(c=>{ c.hidden=true; }); vis.forEach((c,i)=>{ c.hidden=!(expanded||i<lim); });
+    const rest=vis.length-lim; moreBtn.hidden=rest<=0; moreBtn.setAttribute("aria-expanded",String(expanded));
     fEl.hidden=LIMIT===0&&!expanded;
-    moreBtn.querySelector("span").textContent=rest<=0?"":LIMIT===0?(expanded?"הסתרת העבודות":`הצגת ${rest} עבודות נוספות`):expanded?"להצגת פחות עבודות":`להצגת עוד ${rest} עבודות`; }
+    moreBtn.querySelector("span").textContent=rest<=0?"":LIMIT===0?(expanded?"הסתרת העבודות":rest===1?"הצגת עבודה נוספת":`הצגת ${rest} עבודות נוספות`):expanded?"להצגת פחות עבודות":rest===1?"להצגת עוד עבודה אחת":`להצגת עוד ${rest} עבודות`; }
   fEl.addEventListener("click",e=>{ const b=e.target.closest("[data-cat]"); if(!b) return; cur=b.dataset.cat; if(LIMIT>0) expanded=false;
     fEl.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b))); apply(); track("filter_works",{category:cur}); });
   moreBtn.addEventListener("click",()=>{
@@ -736,10 +774,11 @@ if(PAGE==="works"){
   const cards=[...grid.querySelectorAll(".card")];
   function apply(){
     const vis=cards.filter(c=>cur==="all"||c.dataset.cats.split(" ").includes(cur));
-    cards.forEach(c=>{ c.hidden=true; }); vis.forEach((c,i)=>{ c.hidden=!(expanded||i<LIMIT); });
-    const rest=vis.length-LIMIT; moreBtn.hidden=rest<=0; moreBtn.setAttribute("aria-expanded",String(expanded));
+    const lim=(LIMIT>0&&vis.length<=4)?vis.length:LIMIT;   /* four or fewer fit in one row: show them all, no button */
+    cards.forEach(c=>{ c.hidden=true; }); vis.forEach((c,i)=>{ c.hidden=!(expanded||i<lim); });
+    const rest=vis.length-lim; moreBtn.hidden=rest<=0; moreBtn.setAttribute("aria-expanded",String(expanded));
     fEl.hidden=LIMIT===0&&!expanded;
-    moreBtn.querySelector("span").textContent=rest<=0?"":LIMIT===0?(expanded?"הסתרת העבודות":`הצגת ${rest} עבודות נוספות`):expanded?"להצגת פחות עבודות":`להצגת עוד ${rest} עבודות`; }
+    moreBtn.querySelector("span").textContent=rest<=0?"":LIMIT===0?(expanded?"הסתרת העבודות":rest===1?"הצגת עבודה נוספת":`הצגת ${rest} עבודות נוספות`):expanded?"להצגת פחות עבודות":rest===1?"להצגת עוד עבודה אחת":`להצגת עוד ${rest} עבודות`; }
   fEl.addEventListener("click",e=>{ const b=e.target.closest("[data-cat]"); if(!b) return; cur=b.dataset.cat; if(LIMIT>0) expanded=false;
     fEl.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b))); apply(); track("filter_works",{category:cur}); });
   moreBtn.addEventListener("click",()=>{
@@ -814,7 +853,8 @@ function caseV2(p,nextP){
   const ok=v=>v&&!(Array.isArray(v)?(!v.length||v.every(isTodoOnly)):isTodoOnly(v));
   const facts=[["סוג העבודה",p.kind||p.context],["קהל היעד",p.audience],["כלים",p.tools],[p.warm?"הכרה":"סטטוס",p.status!=="הושלם"?p.status:""]].filter(f=>ok(f[1]));
   const ST={challenge:["האתגר",p.challenge],did:[p.didTitle||"התהליך",p.did],output:["התוצאה",p.output]};
-  const steps=(p.stepsOrder||["challenge","did","output"]).map(k=>ST[k]).filter(s=>ok(s[1]));
+  const steps=(p.stepsOrder||["challenge","did","output"]).filter(k=>k!=="output").map(k=>ST[k]).filter(s=>ok(s[1]));
+  const bottom=ok(p.output)?`<div class="cs2-bottom"><span class="eyebrow">בשורה התחתונה</span><p>${T(p.output)}</p></div>`:"";
   const body=v=>Array.isArray(v)?`<ul>${v.filter(i=>!isTodoOnly(i)).map(i=>`<li>${T(i)}</li>`).join("")}</ul>`:`<p>${T(v)}</p>`;
   const D=p.decisions||[];
   const panel=(d,i,tabbed)=>`<div class="dec-panel${d.tall?" tall":""}"${tabbed?` role="tabpanel" id="dp-${i}" aria-labelledby="dt-${i}"${i?" hidden":""}`:""}>
@@ -828,9 +868,10 @@ function caseV2(p,nextP){
   const used=D.map(d=>d.img), hide=p.hideShots||[];
   const rest=(p.shots||[]).filter(([s])=>!used.includes(s)&&!hide.some(h=>s.endsWith(h)));
   return `<section class="pp-details wrap cs2">
+      ${bottom}
       ${facts.length?`<dl class="pp-facts">${facts.map(([k,v])=>`<div><dt>${k}</dt><dd>${T(v)}</dd></div>`).join("")}</dl>`:""}
       ${p.metrics?`<div class="metrics">${p.metrics.map(([n,l])=>`<div><b>${n}</b><span>${l}</span></div>`).join("")}</div>`:""}
-      ${steps.length?`<section class="cs2-block"><div class="cs2-head"><span class="eyebrow">איך זה נבנה</span><h2>${ok(p.challenge)?"מהאתגר ועד התוצאה":"מהתכנון ועד התוצאה"}</h2></div>
+      ${steps.length?`<section class="cs2-block"><div class="cs2-head"><span class="eyebrow">התהליך</span><h2>${ok(p.challenge)?"מהאתגר ועד הפתרון":"איך זה נבנה"}</h2></div>
         <ol class="cs2-steps">${steps.map(([h,v],i)=>`<li><span class="n" aria-hidden="true">${String(i+1).padStart(2,"0")}</span><div><h3>${h}</h3>${body(v)}</div></li>`).join("")}</ol>
       </section>`:""}
       ${decHTML}
