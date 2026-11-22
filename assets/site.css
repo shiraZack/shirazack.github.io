@@ -1098,3 +1098,12 @@ a.tile{text-decoration:none; color:inherit}
 @media (min-width:701px) and (max-width:1099px){ #more-grid{grid-template-columns:repeat(4,minmax(0,1fr))} }
 /* the student line reads as a quiet subtitle, not a second heading */
 .hero-edu{font:500 1.05rem/1.5 var(--f-head); color:var(--muted); margin-top:var(--s1); letter-spacing:.005em}
+
+/* ===== hero sized to the screen: fills most of the first view, the projects band peeks below ===== */
+@media (min-width:901px){
+  .hero{min-height:min(calc(100svh - 69px - 96px), 820px); align-items:center; padding-block:var(--s5); gap:var(--s6)}
+  .hero h1{font-size:clamp(2.2rem,3.4vw,3.25rem)}
+  .hero-edu{font-size:1.12rem}
+  .hero .blurb{font-size:1.15rem}
+  .hero .id .portrait{width:min(360px,28vw)}
+}
