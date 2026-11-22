@@ -806,7 +806,7 @@ if(copyBtn) copyBtn.addEventListener("click",()=>{
     raf=(Math.abs(x-rx)+Math.abs(y-ry)>.3)?requestAnimationFrame(loop):0; };
   addEventListener("pointermove",e=>{ if(e.pointerType!=="mouse") return; x=e.clientX; y=e.clientY;
     document.body.classList.add("cur-on"); grid.style.setProperty("--mx",x+"px"); grid.style.setProperty("--my",y+"px");
-    ring.classList.toggle("hov",!!e.target.closest("a,button,.card,.tile,.area,[data-open],input,label"));
+    ring.classList.toggle("hov",!!e.target.closest("a,button,.card,.tile,[data-open],input,label"));
     if(!raf) raf=requestAnimationFrame(loop); },{passive:true});
   document.addEventListener("mouseleave",()=>document.body.classList.remove("cur-on"));
   addEventListener("blur",()=>document.body.classList.remove("cur-on"));

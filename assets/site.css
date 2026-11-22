@@ -843,7 +843,6 @@ a.tile{text-decoration:none; color:inherit}
 /* ===== stage 3: a compact first screen, so the projects show up early ===== */
 .sel-feat{padding-block:var(--s5)}
 .sel-feat .sec-head{margin-bottom:var(--s3); gap:var(--s1)}
-.sel-feat .sec-head h2{font-size:clamp(1.7rem,2.6vw,2.2rem)}
 /* smaller cards: shorter images and tighter text */
 .card .cover{aspect-ratio:2/1}
 .card-body{padding:var(--s2) var(--s3) var(--s3); gap:6px}
@@ -861,3 +860,7 @@ a.tile{text-decoration:none; color:inherit}
   .feat-grid .meta bdi{display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%}
   .feat-grid .card:hover{transform:none}
 }
+
+/* ===== stage 4: every section opens with the same eyebrow + heading ===== */
+.about .sec-head{margin-bottom:var(--s4)}
+.eyebrow{font-size:.92rem; font-weight:700; letter-spacing:.06em}
