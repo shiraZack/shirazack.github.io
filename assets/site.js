@@ -780,6 +780,8 @@ function applyDraft(){ const on=location.hash==="#draft";
   if(on&&draftEl){ const k=(JSON.stringify(P).match(/\[\[/g)||[]).length; draftEl.textContent=`מצב טיוטה · ${k} מקומות להשלמה`; } }
 window.addEventListener("hashchange",applyDraft); applyDraft();
 
+/* ---------- LinkedIn click ---------- */
+{ const li=document.getElementById("linkedin"); if(li) li.addEventListener("click",()=>track("open_linkedin")); }
 /* ---------- copy the email address ---------- */
 const copyBtn=document.getElementById("copy"), copied=document.getElementById("copied"), email=document.getElementById("email");
 if(copyBtn) copyBtn.addEventListener("click",()=>{
