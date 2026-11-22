@@ -544,7 +544,7 @@ if(PAGE==="home"){
   /* the full range, in progress and confidential, back on the one page */
   const REST=DONE_ORDERED.filter(p=>!SEL.includes(p));
   const PHONE=matchMedia("(max-width:700px)");
-  setupGrid(document.getElementById("more-grid"),REST,PHONE.matches?4:6);
+  setupGrid(document.getElementById("more-grid"),REST,0);   /* the archive starts folded: the six selected projects lead */
   const ng=document.getElementById("now-grid"); if(ng) ng.innerHTML=NOW.map(p=>card(p)).join("");
   const cg=document.getElementById("conf-grid"); if(cg) cg.innerHTML=CONF.map(p=>card(p)).join("");
   lightSteps();
@@ -582,8 +582,9 @@ function setupGrid(grid,list,LIMIT){
     const vis=cards.filter(c=>cur==="all"||c.dataset.cats.split(" ").includes(cur));
     cards.forEach(c=>{ c.hidden=true; }); vis.forEach((c,i)=>{ c.hidden=!(expanded||i<LIMIT); });
     const rest=vis.length-LIMIT; moreBtn.hidden=rest<=0; moreBtn.setAttribute("aria-expanded",String(expanded));
-    moreBtn.querySelector("span").textContent=rest<=0?"":expanded?"להצגת פחות עבודות":`להצגת עוד ${rest} עבודות`; }
-  fEl.addEventListener("click",e=>{ const b=e.target.closest("[data-cat]"); if(!b) return; cur=b.dataset.cat; expanded=false;
+    fEl.hidden=LIMIT===0&&!expanded;
+    moreBtn.querySelector("span").textContent=rest<=0?"":LIMIT===0?(expanded?"הסתרת העבודות":`הצגת ${rest} עבודות נוספות`):expanded?"להצגת פחות עבודות":`להצגת עוד ${rest} עבודות`; }
+  fEl.addEventListener("click",e=>{ const b=e.target.closest("[data-cat]"); if(!b) return; cur=b.dataset.cat; if(LIMIT>0) expanded=false;
     fEl.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b))); apply(); track("filter_works",{category:cur}); });
   moreBtn.addEventListener("click",()=>{
     const top=moreBtn.getBoundingClientRect().top; expanded=!expanded; apply();
@@ -693,8 +694,9 @@ if(PAGE==="works"){
     const vis=cards.filter(c=>cur==="all"||c.dataset.cats.split(" ").includes(cur));
     cards.forEach(c=>{ c.hidden=true; }); vis.forEach((c,i)=>{ c.hidden=!(expanded||i<LIMIT); });
     const rest=vis.length-LIMIT; moreBtn.hidden=rest<=0; moreBtn.setAttribute("aria-expanded",String(expanded));
-    moreBtn.querySelector("span").textContent=rest<=0?"":expanded?"להצגת פחות עבודות":`להצגת עוד ${rest} עבודות`; }
-  fEl.addEventListener("click",e=>{ const b=e.target.closest("[data-cat]"); if(!b) return; cur=b.dataset.cat; expanded=false;
+    fEl.hidden=LIMIT===0&&!expanded;
+    moreBtn.querySelector("span").textContent=rest<=0?"":LIMIT===0?(expanded?"הסתרת העבודות":`הצגת ${rest} עבודות נוספות`):expanded?"להצגת פחות עבודות":`להצגת עוד ${rest} עבודות`; }
+  fEl.addEventListener("click",e=>{ const b=e.target.closest("[data-cat]"); if(!b) return; cur=b.dataset.cat; if(LIMIT>0) expanded=false;
     fEl.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b))); apply(); track("filter_works",{category:cur}); });
   moreBtn.addEventListener("click",()=>{
     const top=moreBtn.getBoundingClientRect().top; expanded=!expanded; apply();

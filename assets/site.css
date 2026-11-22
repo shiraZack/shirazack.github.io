@@ -790,13 +790,13 @@ a.tile{text-decoration:none; color:inherit}
 .hero h1 .hl2 .squig{position:absolute; right:0; left:0; bottom:-.16em; width:100%; height:.26em; overflow:visible; animation:squig .9s .9s cubic-bezier(.2,.7,.2,1) both}
 .hero h1 .hl2 .squig path{fill:var(--cobalt); stroke:none}
 .id{display:flex; flex-direction:column; align-items:center; gap:var(--s3); min-width:0}
-.id .portrait{width:min(270px,62vw)}
+.id .portrait{width:min(215px,56vw)}
 .id-facts{margin:0; width:100%; max-width:380px; display:grid; gap:var(--s2); padding-top:var(--s1); animation:up .8s .45s cubic-bezier(.2,.7,.2,1) both}
 .id-facts dt{font:600 var(--t-label) var(--f-head); letter-spacing:.08em; color:var(--coral); margin-bottom:.4em}
 .id-facts dd{margin:0; font-size:.95rem; line-height:1.5; color:var(--text)}
 .id-facts dd + dd{margin-top:.35em}
 .id-facts dd b{color:var(--ink); font-weight:700}
-.id-k{display:inline-block; min-width:6.4em; font-weight:600; color:var(--ink)}
+.id-k{display:inline-block; min-width:3.6em; font-weight:600; color:var(--ink)}
 .id-facts .latin{direction:ltr; unicode-bidi:isolate}
 @media (max-width:900px){
   .hero{grid-template-columns:1fr; gap:var(--s4); padding-top:var(--s4)}
@@ -804,7 +804,6 @@ a.tile{text-decoration:none; color:inherit}
 @media (max-width:560px){ .hero h1 .hl2{white-space:normal; display:inline} .hero h1 .hl2 .squig{display:none} .hero h1 br{display:none} }
 @media (max-width:760px){
   .brand b{font-size:1rem}
-  .id-k{display:block; min-width:0}
 }
 @media (max-width:560px){
   .brand small.role-tag{display:none}
@@ -815,4 +814,50 @@ a.tile{text-decoration:none; color:inherit}
   .brand b{font-size:.92rem}
   .nav{gap:2px}
   .nav a{padding:.42em .5em; font-size:.88rem}
+}
+
+/* ===== stage 2: six selected projects in a plain grid (no carousel), archive folded ===== */
+.sel-feat{padding-block:var(--s6)}
+.sel-feat .sec-head{margin-bottom:var(--s4)}
+.feat-grid{gap:var(--s4) var(--s3)}
+.feat-grid .card{border-color:transparent}
+#filters[hidden]{display:none}
+#more .sec-head{margin-bottom:var(--s3)}
+@media (max-width:700px){ .sel-feat{padding-block:var(--s5)} }
+
+/* ===== only real buttons look like tags: everything informative is plain text ===== */
+.pills{gap:0}
+.pills li,.pill{padding:0; border:0; border-radius:0; background:none; color:var(--muted); font-weight:500}
+.pills li + li::before{content:"·"; margin-inline:.45em; color:var(--muted)}
+.areas .area .back .pills li{background:none; border:0; padding:0; color:inherit}
+.chip{padding:0; border-radius:0; background:none; display:inline-flex; align-items:center; gap:.4em}
+.chip::before{content:""; width:7px; height:7px; border-radius:50%; background:currentColor; flex:none}
+.chips{gap:0}
+.chips li{padding:0; border-radius:0; background:none; font-weight:500}
+.chips li + li::before{content:"·"; margin-inline:.5em; color:var(--muted)}
+.sb-n{padding:0; border-radius:0; background:none}
+.areas .area .face .lbl{padding:0; border:0; border-radius:0; background:none; opacity:.75}
+.badge{top:auto; bottom:8px; right:8px; border-radius:5px; padding:.18em .5em; font-size:.7rem}
+.badge + .badge{top:auto; bottom:36px}
+
+/* ===== stage 3: a compact first screen, so the projects show up early ===== */
+.sel-feat{padding-block:var(--s5)}
+.sel-feat .sec-head{margin-bottom:var(--s3); gap:var(--s1)}
+.sel-feat .sec-head h2{font-size:clamp(1.7rem,2.6vw,2.2rem)}
+/* smaller cards: shorter images and tighter text */
+.card .cover{aspect-ratio:2/1}
+.card-body{padding:var(--s2) var(--s3) var(--s3); gap:6px}
+.card h3{font-size:1.1rem}
+.card p,.card .card-line{font-size:.93rem; line-height:1.5}
+@media (min-width:1100px){ #more-grid,#now-grid{grid-template-columns:repeat(4,minmax(0,1fr))} }
+@media (max-width:700px){
+  /* the six projects as a two-column grid: image, type and name */
+  .grid.feat-grid{grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--s2)}
+  .feat-grid .cover{aspect-ratio:4/3}
+  .feat-grid .card-body{padding:10px 12px 12px; gap:4px}
+  .feat-grid .card h3{font-size:.98rem; line-height:1.3}
+  .feat-grid .card-line,.feat-grid .card-go,.feat-grid .chip,.feat-grid .badge{display:none}
+  .feat-grid .meta{font-size:.74rem}
+  .feat-grid .meta bdi{display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%}
+  .feat-grid .card:hover{transform:none}
 }
