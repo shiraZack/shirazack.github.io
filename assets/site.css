@@ -864,3 +864,87 @@ a.tile{text-decoration:none; color:inherit}
 /* ===== stage 4: every section opens with the same eyebrow + heading ===== */
 .about .sec-head{margin-bottom:var(--s4)}
 .eyebrow{font-size:.92rem; font-weight:700; letter-spacing:.06em}
+
+/* ===== stage 5: case study v2 (facts table, numbered process, design decisions, reflection accordion) ===== */
+.cs2{gap:var(--s5)}
+.pp-facts{margin:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); border:1px solid var(--line); border-radius:var(--r2); background:var(--surface); overflow:hidden}
+.pp-facts > div{padding:var(--s3); min-width:0}
+.pp-facts > div + div{border-inline-start:1px solid var(--line)}
+.pp-facts dt{font:700 .8rem var(--f-head); letter-spacing:.06em; color:var(--coral); margin-bottom:6px}
+.pp-facts dd{margin:0; font:600 1rem/1.45 var(--f-head); color:var(--ink)}
+.cs2-head{display:flex; flex-direction:column; gap:var(--s1); margin-bottom:var(--s4); max-width:44em}
+.cs2-head h2{font:700 clamp(1.6rem,2.6vw,2.2rem)/1.15 var(--f-head); color:var(--ink)}
+.cs2-head p{color:var(--muted); font-size:1.02rem; line-height:1.5}
+.cs2-steps{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:0; position:relative}
+.cs2-steps li{display:grid; grid-template-columns:52px minmax(0,1fr); gap:var(--s3); padding-bottom:var(--s4); position:relative}
+.cs2-steps li:not(:last-child)::before{content:""; position:absolute; top:46px; bottom:6px; right:25px; width:2px; background:var(--line)}
+.cs2-steps .n{width:52px; height:52px; border-radius:50%; display:grid; place-items:center; font:700 1rem var(--f-head); color:var(--cobalt); background:var(--surface); border:2px solid var(--cobalt)}
+.cs2-steps h3{font:700 1.25rem var(--f-head); color:var(--ink); margin:10px 0 8px}
+.cs2-steps p,.cs2-steps li li{font-size:1.05rem; line-height:1.65; color:var(--text); max-width:46em}
+.cs2-steps ul{margin:0; padding-inline-start:1.1em}
+.cs2-steps li li{display:list-item; padding:0; margin-bottom:6px}
+.cs2-steps li li::before{display:none}
+.cs2-steps li li::marker{color:var(--cobalt)}
+.cs2-steps.wait > li{opacity:0; transform:translateY(16px)}
+.cs2-steps.go > li{opacity:1; transform:none; transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1)}
+.cs2-steps.go > li:nth-child(2){transition-delay:.25s} .cs2-steps.go > li:nth-child(3){transition-delay:.5s}
+.dec-tabs{display:flex; flex-wrap:wrap; gap:var(--s1); margin-bottom:var(--s3); border-bottom:1px solid var(--line)}
+.dec-tabs button{font:600 1rem var(--f-head); color:var(--muted); background:none; border:0; border-bottom:3px solid transparent; padding:.6em .9em; margin-bottom:-1px; cursor:pointer; transition:color .2s, border-color .2s}
+.dec-tabs button:hover{color:var(--ink)}
+.dec-tabs button[aria-selected="true"]{color:var(--ink); border-bottom-color:var(--coral)}
+.dec-tabs button:focus-visible{outline:2px solid var(--cobalt); outline-offset:2px; border-radius:6px}
+.dec-panel{display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr); gap:var(--s4); align-items:center; animation:decIn .35s ease both}
+.dec-panel[hidden]{display:none}
+@keyframes decIn{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+.dec-img img{display:block; width:100%; height:auto; border-radius:var(--r2); border:1px solid var(--line); box-shadow:var(--sh-2); background:#fff}
+.dec-notes{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:var(--s3)}
+.dec-notes li{padding-inline-start:var(--s2); border-inline-start:3px solid #F4B3BF}
+.dec-notes b{display:block; font:700 1.05rem var(--f-head); color:var(--ink); margin-bottom:4px}
+.dec-notes p{margin:0; font-size:1rem; line-height:1.6; color:var(--text)}
+@media (prefers-reduced-motion: reduce){ .dec-panel{animation:none} .cs2-steps.wait > li{opacity:1; transform:none} }
+.cs2-learn{border:1px solid var(--line); border-radius:var(--r2); background:var(--surface)}
+.cs2-learn summary{list-style:none; display:flex; align-items:center; justify-content:space-between; gap:var(--s2); padding:var(--s3); cursor:pointer; font:700 1.15rem var(--f-head); color:var(--ink)}
+.cs2-learn summary::-webkit-details-marker{display:none}
+.cs2-learn summary i{font-style:normal; width:32px; height:32px; border-radius:50%; display:grid; place-items:center; border:1px solid var(--line); color:var(--cobalt); font-size:1.3rem; transition:transform .25s}
+.cs2-learn[open] summary i{transform:rotate(45deg)}
+.cs2-learn p{margin:0; padding:0 var(--s3) var(--s3); font-size:1.05rem; line-height:1.7; max-width:50em}
+@media (max-width:860px){
+  .dec-panel{grid-template-columns:1fr; gap:var(--s3)}
+  .pp-facts > div + div{border-inline-start:none; border-top:1px solid var(--line)}
+  .pp-facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pp-facts > div:nth-child(2n){border-inline-start:1px solid var(--line)}
+  .pp-facts > div:nth-child(2){border-top:none}
+}
+@media (max-width:520px){
+  .pp-facts{grid-template-columns:1fr}
+  .pp-facts > div:nth-child(2n){border-inline-start:none}
+  .pp-facts > div:nth-child(2){border-top:1px solid var(--line)}
+  .dec-tabs{flex-wrap:nowrap; gap:2px}
+  .dec-tabs button{flex:1 1 0; min-width:0; font-size:.88rem; line-height:1.25; padding:.55em .3em; text-align:center}
+  .cs2-steps li{grid-template-columns:40px minmax(0,1fr); gap:var(--s2)}
+  .cs2-steps .n{width:40px; height:40px; font-size:.9rem}
+  .cs2-steps li:not(:last-child)::before{right:19px; top:40px}
+  .cs2-steps h3{margin-top:6px}
+}
+
+/* subtle hot spots: a small soft dot, its title on hover, and the note beside lights up */
+.dec-img{position:relative}
+.dot{position:absolute; left:var(--x); top:var(--y); transform:translate(-50%,-50%); width:18px; height:18px; padding:0; border-radius:50%; border:2px solid #fff; background:rgba(234,113,134,.85); box-shadow:0 1px 4px rgba(0,0,0,.22); cursor:pointer; transition:transform .2s, background .2s}
+.dot:hover,.dot.on,.dot:focus-visible{transform:translate(-50%,-50%) scale(1.25); background:var(--cobalt); outline:none}
+.dot .tip{position:absolute; bottom:calc(100% + 10px); left:50%; transform:translate(-50%,4px); white-space:nowrap; font:600 .82rem var(--f-head); color:#fff; background:rgba(46,44,82,.94); padding:.4em .7em; border-radius:8px; opacity:0; pointer-events:none; transition:opacity .2s, transform .2s}
+.dot .tip::after{content:""; position:absolute; top:100%; left:50%; margin-left:-5px; border:5px solid transparent; border-top-color:rgba(46,44,82,.94)}
+.dot:hover .tip,.dot:focus-visible .tip{opacity:1; transform:translate(-50%,0)}
+.dec-notes li{transition:border-color .2s, background .2s; border-radius:8px 0 0 8px; padding-block:6px}
+.dec-notes li.on{border-inline-start-color:var(--cobalt); background:rgba(98,95,166,.06)}
+@media (hover:none){ .dot .tip{display:none} }
+@media (max-width:520px){ .dot{width:16px; height:16px} }
+
+/* two screens side by side (fewer than 3, so no tabs), and tall phone screens */
+.dec-pair{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--s5)}
+.dec-pair .dec-panel{grid-template-columns:1fr; align-items:start; animation:none}
+.dec-side h3{font:700 1.15rem var(--f-head); color:var(--ink); margin-bottom:var(--s2)}
+.dec-panel.tall .dec-img{max-width:280px; justify-self:center; width:100%}
+.dec-panel.tall .dec-img img{border-radius:28px}
+.cs2 .metrics{margin-top:calc(var(--s3) * -1)}
+@media (max-width:700px){ .dec-pair{grid-template-columns:1fr; gap:var(--s4)} }
+@media (max-width:700px){ .dec-panel.tall .dec-img{max-width:220px} }

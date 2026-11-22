@@ -87,6 +87,17 @@ const P=[
             ["slides/sb/05.jpg","מסך 21","SLA זה לא רק מספר","מפת רחוב עם נקודות חמות מהבהבות. כל נקודה פותחת בועת מידע: זמן הטיפול המובטח מול הזמן בפועל אחרי ״פינג פונג״. נקודה שנצפתה מפסיקה להבהב."],
             ["slides/sb/06.jpg","מסך 22","זכוכית מגדלת על המפגע","הגדלה של המפגע בלי לאבד את ההקשר של המפה. עמוד תאורה שנפגע: 42 שעות מובטחות מול 90 שעות בפועל, פי 3 מהזמן המובטח."]]},
    shots:[["img/pingpong-open.jpg","מסך הפתיחה"],["img/pingpong-drag.jpg","״משולש הכלבים״: גוררים כל מקרה לגורם המטפל"],["img/pingpong-question.jpg","שאלת ניתוב: ערימת גזם ושקיות אשפה פתוחות"]],
+   kind:"לומדה אינטראקטיבית", 
+   decisions:[
+     { img:"img/pingpong-open.jpg", alt:"מסך הפתיחה של הלומדה", t:"מסך הפתיחה", spots:[
+       [50,4,"ניווט שמראה איפה נמצאים","חמשת הפרקים מופיעים בניווט העליון, והפרק הנוכחי מודגש, כדי שהלומד ידע איפה הוא נמצא בלומדה."] ]},
+     { img:"img/pingpong-drag.jpg", alt:"״משולש הכלבים״: גוררים כל מקרה לגורם המטפל", t:"תרגול בגרירה", spots:[
+       [81,45,"גוררים כל מקרה לגורם המטפל","תרגול פעיל: הלומד מתאים כל מקרה למחלקה שאחראית עליו."],
+       [61,89,"בודקים לפני שממשיכים","כפתור ״בדיקה״ נותן משוב מיידי על הניתוב, עם ניסיון נוסף אחרי טעות."] ]},
+     { img:"img/pingpong-question.jpg", alt:"שאלת ניתוב: ערימת גזם ושקיות אשפה פתוחות", t:"שאלת ניתוב", spots:[
+       [82,49,"מקרה מהשטח, החלטה אחת","תושב מדווח על מפגע, והלומד בוחר לאיזו מחלקה לנתב את הפנייה."],
+       [13,91,"אי אפשר לדלג","ניווט ליניארי: אי אפשר להתקדם בלי לסיים את האינטראקציה, כדי שלא ידלגו על שלבי האבחון."] ]}
+   ],
    tools:"Articulate Storyline", link:"" },
  { id:"penso", group:"featured", cover:()=>COV.chat(),
    status:"הוגש לכנס צ'ייס 2027", context:"מחקר · HIT ואוניברסיטת תל אביב",
@@ -101,6 +112,7 @@ const P=[
    output:"מאמר מלא שהוגש לכנס צ'ייס 2027. המחקר ממשיך לפרויקט הצ'אטבוט האדפטיבי לאוריינות משוב.",
    learned:"[[תובנה אחת מהשיחות שתיקחי איתך לכל צ'אטבוט לימודי שתעצבי]]",
    media:["צילום מסך של שיחה עם Penso, בלי פרטים מזהים","טבלת קטגוריות הקידוד","תרשים של התפלגות סוגי ההודעות"],
+   kind:"מחקר איכותני", v2:true,
    tools:"GenAI · הנדסת פרומפטים · ניתוח איכותני", link:"[[קישור למאמר או לתקציר, אחרי פרסום התוכנייה]]" },
  { id:"copyclick", group:"featured", cover:()=>COV.browser("k-g","k-s","k-g","k-r"),
    img:"img/copyclick-hero.jpg", imgAlt:"מסך הפתיחה של CopyClick: הכותרת ״מעצבים עם מיקרו קופי״ לצד מקשי מקלדת שמאייתים מיקרו קופי",
@@ -117,6 +129,18 @@ const P=[
    learned:"כתיבה לממשק היא גם מחיקה: עברתי על כל מילה ושאלתי אם היא מיותרת, ואם היא במקום הנכון. גיליתי כמה לא פשוט לכתוב בגוף ראשון בלשון לא מגדרית, ואיך מדברים עם הלומדים בגובה העיניים. למדתי גם שהקונספט העיצובי צריך לדבר עם התוכן. ובעבודת הצוות למדתי להקשיב לדעות שונות, וגם שכדי שרעיון חדש יובן, לפעמים צריך להתחיל לעצב אותו או לשמוע עליו דעה מבחוץ, ולא רק להסביר אותו.",
    shots:[["img/copyclick-hero.jpg","מסך הפתיחה"],["img/copyclick-test.jpg","״מיקרו טסט״: משפרים מיקרו־קופי בטופס רישום"],["img/copyclick-practice.jpg","הוראות התרגול, לפני שמתחילים"]],
    media:["GIF קצר של התרגול עם המשוב"],
+   kind:"אתר למידה אינטראקטיבי",
+   decisions:[
+     { img:"img/copyclick-hero.jpg", alt:"מסך הפתיחה של CopyClick", t:"מסך הפתיחה", spots:[
+       [26,52,"קונספט שמדבר עם התוכן","מקשי מקלדת שמאייתים ״מיקרו קופי״: העיצוב עצמו מספר שמדובר בכתיבה לממשק."],
+       [47,5,"התפריט כתוב כמו מיקרו־קופי","שמות הפרקים, כמו ״מיקרו טסט״, ״נעשה סדר״ ו״צידה לדרך״, כתובים בגובה העיניים, כמו שהאתר מלמד."],
+       [89,75,"כפתור שממשיך את השם","״הקופי שלכם במרחק של קליק״ ממשיך את משחק המילים של CopyClick."] ]},
+     { img:"img/copyclick-test.jpg", alt:"״מיקרו טסט״: טופס רישום עם מיקרו־קופי חלש ותיבת תשובה", t:"מיקרו טסט", spots:[
+       [27,76,"טופס חלש, בכוונה","טופס רישום עם מיקרו־קופי חלש, שהלומדים צריכים לזהות בו את הבעיות."],
+       [73,72,"מתחילים ממה שהלומדים יודעים","עוד לפני ההסבר, הלומדים כותבים איך היו משפרים את הטופס."] ]},
+     { img:"img/copyclick-practice.jpg", alt:"הוראות התרגול וכפתור ״אז יאללה, שנתחיל לתרגל?״", t:"התרגול", spots:[
+       [63,71,"הנחיה קצרה ומזמינה","שלוש שורות הוראות וכפתור בגובה העיניים: ״אז יאללה, שנתחיל לתרגל?״. אחרי כל בחירה בתרגול מקבלים משוב."] ]}
+   ],
    tools:"Figma", link:"" },
 { id:"moodle", group:"more", cats:["learn","video"], cover:()=>COV.outline(),
    video:{src:"vid/breath.mp4",poster:"img/lms-breath.jpg",dur:"1:31",cap:"סרטון הנשימות מתוך הקורס"},
@@ -138,6 +162,16 @@ const P=[
    output:"מיני־קורס בלמידה עצמית ב־Moodle: כ־45 דקות, שתי יחידות.",
    learned:"",
    shots:[["img/lms-intro.jpg","עמוד הפתיחה של הקורס"],["img/lms-body.jpg","אינפוגרפיקה: מה קורה בגוף כשעומדים מול קהל?"],["img/lms-principles.jpg","12 עקרונות לחיבור אמיתי עם הקהל"],["img/lms-bodylang.jpg","סרטון שפת הגוף: כתבתי את התסריט והופעתי בו"],["img/lms-game.jpg","״מתכוננים לפרזנטציה״: משחק ההלבשה"],["img/lms-structure.jpg","מבנה הקורס ב־Moodle"]],
+   kind:"קורס דיגיטלי בלמידה עצמית", hideShots:["img/lms-game.jpg"],
+   decisions:[
+     { img:"img/lms-intro.jpg", alt:"עמוד הפתיחה של הקורס", t:"עמוד הפתיחה", spots:[
+       [50,82,"יודעים מה מחכה להם","כבר בפתיחה כתוב כמה זמן לוקח הקורס, כמה יחידות יש בו ושזו למידה עצמית, עם המלצה להתקדם לפי הסדר."] ]},
+     { img:"img/lms-body.jpg", alt:"אינפוגרפיקה: מה קורה בגוף כשעומדים מול קהל?", t:"אינפוגרפיקה", spots:[
+       [71,46,"עומדים על תסמין ומבינים למה","כל תסמין נפתח כשעומדים עליו, עם הסבר קצר למה הוא קורה."],
+       [37,82,"מההסבר ישר לתרגול","אחרי ההסבר עוברים לתרגול, כי הקורס משלב תרגול, צפייה ויישום אישי."] ]},
+     { img:"img/lms-principles.jpg", alt:"12 עקרונות לחיבור אמיתי עם הקהל", t:"12 עקרונות", spots:[
+       [30,62,"כרטיסים שנפתחים לקריאה","על כל כרטיס רק כותרת ואייקון, והפירוט נפתח בלחיצה, כך ש־12 עקרונות לא מציפים את המסך."] ]}
+   ],
    tools:"Moodle · Unity", link:'<a href="https://itayweber.github.io/DressUpGame/" target="_blank" rel="noopener">למשחק ההלבשה ↗</a>' },
 { id:"markers", group:"more", cats:["video","learn"], cover:()=>COV.video(),
    video:{src:"vid/markers.mp4",poster:"img/markers-cover.jpg",dur:"3:06"},
@@ -205,6 +239,7 @@ const P=[
    did:["שני מפיקים ממטח (המרכז לטכנולוגיה חינוכית) התארחו אצלנו ונתנו לסרטון ביקורות טובות מאוד.",
         "הסרטון קיבל את הציון הגבוה ביותר בשנתון שלנו."],
    output:"סרטון של 4:13 דקות, מצולם ב־4K, עם כתוביות בעברית.", learned:"",
+   kind:"סרטון הדרכה", v2:true, stepsOrder:["challenge","output","did"],
    tools:"[[באיזו תוכנה ערכתם?]]", link:"[[קישור לסרטון, למשל ב־YouTube כ״לא רשום״]]" },
 { id:"synthesia", group:"more", cats:["ai","video"], cover:()=>COV.video(),
    video:{src:"vid/synthesia.mp4",poster:"img/synthesia.jpg",dur:"1:07"}, decks:[{t:"המצגת",s:["slides/synthesia/01.jpg", "slides/synthesia/02.jpg", "slides/synthesia/03.jpg", "slides/synthesia/04.jpg", "slides/synthesia/05.jpg", "slides/synthesia/06.jpg", "slides/synthesia/07.jpg", "slides/synthesia/08.jpg", "slides/synthesia/09.jpg", "slides/synthesia/10.jpg"]}],
@@ -310,6 +345,14 @@ const P=[
    did:["מסך פתיחה עם שתי פעולות ברורות בלבד: הרשמה או התחברות.",
         "הרשמה עם מספר טלפון או חשבון קיים, ומיקרו־קופי שמרגיע: המספר משמש להרשמה בלבד, בלי פרסומות."],
    output:"פרוטוטייפ אינטראקטיבי ב־Figma.", learned:"",
+   kind:"אפיון ועיצוב אפליקציה",
+   decisions:[
+     { img:"img/cupid-start.jpg", alt:"מסך הפתיחה של קופידון", t:"מסך הפתיחה", tall:true, spots:[
+       [50,88,"שתי פעולות ברורות בלבד","מסך פתיחה עם שתי פעולות בלבד: הרשמה או התחברות."] ]},
+     { img:"img/cupid-signup.jpg", alt:"מסך ההרשמה של קופידון", t:"הרשמה", tall:true, spots:[
+       [50,49,"הרשמה עם חשבון קיים","אפשר להירשם עם מספר טלפון או עם חשבון קיים."],
+       [9,74,"מיקרו־קופי שמרגיע","מתחת לשדה הטלפון כתוב שהמספר משמש להרשמה בלבד, בלי פרסומות."] ]}
+   ],
    tools:"Figma", link:"" },
 { id:"remind", group:"more", cats:["design"], cover:()=>COV.spark(),
    img:"img/remind-cover2.jpg", imgAlt:"שני הפליירים של ReMind, בעברית ובאנגלית",
@@ -479,7 +522,8 @@ if(ROOT) P.forEach(p=>{ p.img=U(p.img);
   if(p.decks) p.decks.forEach(d=>{ d.s=d.s.map(U); });
   if(p.shots) p.shots=p.shots.map(([s,...r])=>[U(s),...r]);
   if(p.board) p.board.items=p.board.items.map(([s,...r])=>[U(s),...r]);
-  if(p.phones) p.phones=p.phones.map(U); });
+  if(p.phones) p.phones=p.phones.map(U);
+  if(p.decisions) p.decisions.forEach(d=>{ d.img=U(d.img); }); });
 
 /* ---------- analytics: paste a Google Analytics 4 measurement ID (G-...) to turn it on ---------- */
 const GA_ID="";
@@ -745,12 +789,12 @@ function renderProject(p){
         ${p.confidential?`<p class="confidential">${LOCK}<span>החומרים המקוריים חסויים. כאן מתואר התהליך בלבד, בלי שמות של לקוחות או מערכות.</span></p>`:""}
         ${p.role?`<div class="pp-role${isTodoOnly(p.role)?" only-todo":""}"><h3>התפקיד שלי</h3><p>${T(p.role)}</p></div>`:""}
         ${p.roles?`<ul class="chips">${p.roles.map(r=>`<li>${r}</li>`).join("")}</ul>`:""}
-        ${p.tools?`<span class="tools-line${isTodoOnly(p.tools)?" only-todo":""}"><b>כלים:</b> <bdi>${T(p.tools)}</bdi></span>`:""}
+        ${p.tools&&!(p.decisions||p.v2)?`<span class="tools-line${isTodoOnly(p.tools)?" only-todo":""}"><b>כלים:</b> <bdi>${T(p.tools)}</bdi></span>`:""}
         ${(p.url||(p.link&&!isTodoOnly(p.link)))?`<div class="pp-actions">${p.url?`<a class="btn primary" href="${p.url}" target="_blank" rel="noopener">${p.urlLabel}</a>`:""}${p.link&&!isTodoOnly(p.link)?`<span class="pp-extra">${T(p.link)}</span>`:""}</div>`:""}
         ${p.link&&isTodoOnly(p.link)?`<p class="case-foot only-todo">${T(p.link)}</p>`:""}
       </div>
     </section>
-    <section class="pp-details wrap">
+    ${(p.decisions||p.v2)?caseV2(p,nextP):`<section class="pp-details wrap">
       ${p.metrics?`<div class="metrics">${p.metrics.map(([n,l])=>`<div><b>${n}</b><span>${l}</span></div>`).join("")}</div>`:""}
       <div class="cs-grid">
         ${sec("האתגר",p.challenge)}${sec("קהל היעד",p.audience)}
@@ -762,7 +806,62 @@ function renderProject(p){
       ${p.shots?`<div class="shots">${p.shots.map(([src,c,k])=>`<figure><img src="${src}" alt="${c}" loading="lazy"${k?` class="${k}"`:""}><figcaption>${c}</figcaption></figure>`).join("")}</div>`:""}
       ${p.media&&p.media.length?`<div class="slots">${p.media.map(m=>`<div class="slot">${IMG}<span>מקום ל: ${m}</span></div>`).join("")}</div>`:""}
       <div class="pp-next"><a class="btn" href="${ROOT}index.html#more">→ כל העבודות</a><a class="btn primary" href="${HREF(nextP.id)}">הפרויקט הבא: ${nextP.title} ←</a></div>
+    </section>`}`;
+  if(p.decisions||p.v2) wireCase();
+}
+/* ---------- case study v2 (UX Blocks): facts table, numbered process, design decisions as hot spots, reflection in an accordion ---------- */
+function caseV2(p,nextP){
+  const ok=v=>v&&!(Array.isArray(v)?(!v.length||v.every(isTodoOnly)):isTodoOnly(v));
+  const facts=[["סוג העבודה",p.kind||p.context],["קהל היעד",p.audience],["כלים",p.tools],[p.warm?"הכרה":"סטטוס",p.status!=="הושלם"?p.status:""]].filter(f=>ok(f[1]));
+  const ST={challenge:["האתגר",p.challenge],did:[p.didTitle||"התהליך",p.did],output:["התוצאה",p.output]};
+  const steps=(p.stepsOrder||["challenge","did","output"]).map(k=>ST[k]).filter(s=>ok(s[1]));
+  const body=v=>Array.isArray(v)?`<ul>${v.filter(i=>!isTodoOnly(i)).map(i=>`<li>${T(i)}</li>`).join("")}</ul>`:`<p>${T(v)}</p>`;
+  const D=p.decisions||[];
+  const panel=(d,i,tabbed)=>`<div class="dec-panel${d.tall?" tall":""}"${tabbed?` role="tabpanel" id="dp-${i}" aria-labelledby="dt-${i}"${i?" hidden":""}`:""}>
+          <div class="dec-img"><img src="${d.img}" alt="${d.alt}" loading="${i?"lazy":"eager"}">${d.spots.map((s,k)=>`<button type="button" class="dot" style="--x:${s[0]}%;--y:${s[1]}%" data-k="${i}-${k}" aria-label="${s[2]}"><span class="tip" aria-hidden="true">${s[2]}</span></button>`).join("")}</div>
+          <div class="dec-side">${tabbed?"":`<h3>${d.t}</h3>`}<ul class="dec-notes">${d.spots.map((s,k)=>`<li data-k="${i}-${k}"><b>${s[2]}</b><p>${s[3]}</p></li>`).join("")}</ul></div>
+        </div>`;
+  const decHTML=!D.length?"":`<section class="cs2-block"><div class="cs2-head"><span class="eyebrow">החשיבה שמאחורי המסכים</span><h2>החלטות העיצוב שלי</h2></div>
+        ${D.length>=3?`<div class="dec-tabs" role="tablist" aria-label="מסכים מהפרויקט">${D.map((d,i)=>`<button type="button" role="tab" id="dt-${i}" aria-controls="dp-${i}" aria-selected="${i===0}" tabindex="${i===0?0:-1}">${d.t}</button>`).join("")}</div>${D.map((d,i)=>panel(d,i,true)).join("")}`
+          :`<div class="dec-pair">${D.map((d,i)=>panel(d,i,false)).join("")}</div>`}
+      </section>`;
+  const used=D.map(d=>d.img), hide=p.hideShots||[];
+  const rest=(p.shots||[]).filter(([s])=>!used.includes(s)&&!hide.some(h=>s.endsWith(h)));
+  return `<section class="pp-details wrap cs2">
+      ${facts.length?`<dl class="pp-facts">${facts.map(([k,v])=>`<div><dt>${k}</dt><dd>${T(v)}</dd></div>`).join("")}</dl>`:""}
+      ${p.metrics?`<div class="metrics">${p.metrics.map(([n,l])=>`<div><b>${n}</b><span>${l}</span></div>`).join("")}</div>`:""}
+      ${steps.length?`<section class="cs2-block"><div class="cs2-head"><span class="eyebrow">איך זה נבנה</span><h2>${ok(p.challenge)?"מהאתגר ועד התוצאה":"מהתכנון ועד התוצאה"}</h2></div>
+        <ol class="cs2-steps">${steps.map(([h,v],i)=>`<li><span class="n" aria-hidden="true">${String(i+1).padStart(2,"0")}</span><div><h3>${h}</h3>${body(v)}</div></li>`).join("")}</ol>
+      </section>`:""}
+      ${decHTML}
+      ${(p.decks||[]).map((d,k)=>(!p.img&&k===0)?"":deckHTML(d,k)).join("")}
+      ${p.board?`<section class="board"><div class="board-head"><h3>${p.board.t}</h3>${p.board.lede?`<p>${p.board.lede}</p>`:""}${p.board.note?`<p class="pp-note">${INFO}<span>${p.board.note}</span></p>`:""}</div><ol>${p.board.items.map(([src,n,h,d])=>`<li><img src="${src}" alt="${n}: ${h}" loading="lazy"><div class="sb-txt"><span class="sb-n">${n}</span><h4>${h}</h4><p>${d}</p></div></li>`).join("")}</ol></section>`:""}
+      ${rest.length?`<section class="cs2-block"><div class="cs2-head"><span class="eyebrow">עוד מהפרויקט</span></div><div class="shots">${rest.map(([src,c,k])=>`<figure><img src="${src}" alt="${c}" loading="lazy"${k?` class="${k}"`:""}><figcaption>${c}</figcaption></figure>`).join("")}</div></section>`:""}
+      ${ok(p.learned)?`<details class="cs2-learn"><summary><span>מה למדתי מהפרויקט</span><i aria-hidden="true">+</i></summary><p>${T(p.learned)}</p></details>`:""}
+      ${p.media&&p.media.length?`<div class="slots">${p.media.map(m=>`<div class="slot">${IMG}<span>מקום ל: ${m}</span></div>`).join("")}</div>`:""}
+      <div class="pp-next"><a class="btn" href="${ROOT}index.html#more">→ כל העבודות</a><a class="btn primary" href="${HREF(nextP.id)}">הפרויקט הבא: ${nextP.title} ←</a></div>
     </section>`;
+}
+function wireCase(){
+  const root=document.querySelector(".cs2"); if(!root) return;
+  const tabs=[...root.querySelectorAll(".dec-tabs [role=tab]")];
+  const show=t=>{ tabs.forEach(x=>{ const on=x===t; x.setAttribute("aria-selected",String(on)); x.tabIndex=on?0:-1;
+      document.getElementById(x.getAttribute("aria-controls")).hidden=!on; }); };
+  /* a subtle dot on the screen and its note light up together */
+  const mark=(k,on)=>root.querySelectorAll(`[data-k="${k}"]`).forEach(el=>el.classList.toggle("on",on));
+  root.addEventListener("pointerover",e=>{ const t=e.target.closest("[data-k]"); if(t) mark(t.dataset.k,true); });
+  root.addEventListener("pointerout",e=>{ const t=e.target.closest("[data-k]"); if(t) mark(t.dataset.k,false); });
+  root.addEventListener("focusin",e=>{ const t=e.target.closest(".dot"); if(t) mark(t.dataset.k,true); });
+  root.addEventListener("focusout",e=>{ const t=e.target.closest(".dot"); if(t) mark(t.dataset.k,false); });
+  root.addEventListener("click",e=>{ const t=e.target.closest(".dot"); if(!t) return; root.querySelectorAll(".on").forEach(x=>x.classList.remove("on")); mark(t.dataset.k,true);
+    const n=root.querySelector(`li[data-k="${t.dataset.k}"]`); if(n&&matchMedia("(max-width:860px)").matches) n.scrollIntoView({behavior:"smooth",block:"nearest"}); });
+  tabs.forEach((t,i)=>{ t.addEventListener("click",()=>{ show(t); track("design_screen",{project:PID,screen:i+1}); });
+    t.addEventListener("keydown",e=>{ const d=e.key==="ArrowLeft"?1:e.key==="ArrowRight"?-1:0; if(!d) return; e.preventDefault();
+      const n=tabs[(i+d+tabs.length)%tabs.length]; n.focus(); show(n); }); });
+  root.querySelector(".cs2-learn")?.addEventListener("toggle",e=>{ if(e.target.open) track("open_learned",{project:PID}); });
+  /* steps ease in one by one as they scroll into view */
+  const st=root.querySelector(".cs2-steps"); if(st&&"IntersectionObserver" in window&&!matchMedia("(prefers-reduced-motion: reduce)").matches){
+    st.classList.add("wait"); const io=new IntersectionObserver(es=>{ if(es[0].isIntersecting){ st.classList.replace("wait","go"); io.disconnect(); } },{threshold:.2}); io.observe(st); }
 }
 function deckGo(el,step){ const p=curP; if(!p||!p.decks||!el) return; const d=p.decks[+el.dataset.deck]; const i=Math.min(d.s.length-1,Math.max(0,+el.dataset.i+step));
   el.dataset.i=i; const img=el.querySelector(".deck-stage img"); img.src=d.s[i]; img.alt=`${d.t}, שקף ${i+1}`;
