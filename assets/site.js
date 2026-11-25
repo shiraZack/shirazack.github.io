@@ -589,7 +589,7 @@ if(PAGE==="home"){
   /* the full range, in progress and confidential, back on the one page */
   const REST=DONE_ORDERED.filter(p=>!SEL.includes(p));
   const PHONE=matchMedia("(max-width:700px)");
-  setupGrid(document.getElementById("more-grid"),REST,PHONE.matches?3:4);   /* one row peeks out, the rest opens on request */
+  setupGrid(document.getElementById("more-grid"),REST,4);   /* one row peeks out, the rest opens on request */
   const ng=document.getElementById("now-grid"); if(ng) ng.innerHTML=NOW.map(p=>card(p)).join("");
   const cg=document.getElementById("conf-grid"); if(cg) cg.innerHTML=CONF.map(p=>card(p)).join("");
   lightSteps();

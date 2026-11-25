@@ -1107,3 +1107,6 @@ a.tile{text-decoration:none; color:inherit}
   .hero .blurb{font-size:1.15rem}
   .hero .id .portrait{width:min(360px,28vw)}
 }
+
+/* full range: always four in a row above phone width, also at fractional widths (browser zoom) */
+@media not all and (max-width:700px){ #more-grid{grid-template-columns:repeat(4,minmax(0,1fr))} }
