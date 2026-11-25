@@ -924,11 +924,14 @@ window.addEventListener("hashchange",applyDraft); applyDraft();
 
 /* ---------- LinkedIn click ---------- */
 { const li=document.getElementById("linkedin"); if(li) li.addEventListener("click",()=>track("open_linkedin")); }
+{ const ph=document.getElementById("phone"); if(ph) ph.addEventListener("click",()=>track("call_phone")); }
+{ const wa=document.getElementById("whatsapp"); if(wa) wa.addEventListener("click",()=>track("open_whatsapp")); }
+{ const em=document.getElementById("email"); if(em) em.addEventListener("click",()=>track("open_mail")); }
 /* ---------- copy the email address ---------- */
 const copyBtn=document.getElementById("copy"), copied=document.getElementById("copied"), email=document.getElementById("email");
 if(copyBtn) copyBtn.addEventListener("click",()=>{
   track("copy_email");
-  const done=()=>{ copied.textContent="הכתובת הועתקה"; setTimeout(()=>{ copied.textContent=""; },2500); };
+  const done=()=>{ copied.textContent="הכתובת הועתקה"; copyBtn.classList.add("ok"); setTimeout(()=>{ copied.textContent=""; copyBtn.classList.remove("ok"); },2500); };
   const fallback=()=>{ const r=document.createRange(); r.selectNodeContents(email); const s=getSelection(); s.removeAllRanges(); s.addRange(r); copied.textContent="הכתובת מסומנת, אפשר להעתיק"; };
   try{ navigator.clipboard.writeText(email.textContent.trim()).then(done,fallback); }catch(e){ fallback(); }
 });

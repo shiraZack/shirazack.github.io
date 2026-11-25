@@ -1110,3 +1110,19 @@ a.tile{text-decoration:none; color:inherit}
 
 /* full range: always four in a row above phone width, also at fractional widths (browser zoom) */
 @media not all and (max-width:700px){ #more-grid{grid-template-columns:repeat(4,minmax(0,1fr))} }
+
+/* ===== contact details: labelled rows, copy icon next to the email (25.11) ===== */
+.c-list{list-style:none; margin:0; padding:0; display:grid; gap:4px; width:100%}
+.c-list li{display:grid; grid-template-columns:22px 3.7em minmax(0,auto) auto; justify-content:start; align-items:center; column-gap:10px; min-height:46px}
+.c-ic{width:20px; height:20px; color:var(--coral)}
+.c-lb{font:500 var(--t-label) var(--f-head); color:var(--on-dark-muted)}
+.c-list a:not(.c-btn){font:600 1.08rem var(--f-head); color:var(--on-dark); text-decoration:none; border-bottom:1px solid var(--dark-line); padding-block:8px 4px; overflow-wrap:anywhere; justify-self:start; transition:border-color .2s ease}
+.c-list a:not(.c-btn):hover{border-color:var(--coral)}
+.c-btn{width:44px; height:44px; border-radius:50%; border:0; background:transparent; color:var(--on-dark-muted); cursor:pointer; display:grid; place-items:center; transition:background .2s ease, color .2s ease}
+.c-btn:hover{background:rgba(255,255,255,.1); color:var(--on-dark)}
+.c-btn svg{width:20px; height:20px; grid-area:1/1}
+.c-btn .c-ok{display:none; color:var(--sage)} .c-btn.ok .c-ok{display:block} .c-btn.ok .c-copy{display:none}
+.contact-grid{grid-template-columns:minmax(0,1.3fr) minmax(max-content,1fr)}
+@media (min-width:351px){ .c-list a:not(.c-btn){white-space:nowrap} }
+@media (max-width:760px){ .contact-grid{grid-template-columns:1fr} .c-list li{column-gap:8px; grid-template-columns:20px 3.4em minmax(0,auto) auto} .c-list a:not(.c-btn){font-size:.94rem} .c-btn{margin-inline-start:-6px} }
+@media (max-width:350px){ .c-list li{grid-template-columns:20px minmax(0,auto) auto} .c-lb{display:none} }
